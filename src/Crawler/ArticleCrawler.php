@@ -19,7 +19,9 @@ class ArticleCrawler {
 	}
 
 	public function getText(): string {
-		return $this->mainContent->filter( '.body .textile' )->text();
+		return implode( "\n", $this->mainContent->filter( '.body .textile' )->each( function ( $node, $i ) {
+			return trim( $node->text() );
+		} ) );
 	}
 
 	public function getTitle(): string {
