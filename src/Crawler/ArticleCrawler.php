@@ -19,14 +19,14 @@ class ArticleCrawler {
 	}
 
 	public function getText(): string {
-		return trim( $this->mainContent->filter( '.body .textile' )->text() );
+		return $this->mainContent->filter( '.body .textile' )->text();
 	}
 
 	public function getTitle(): string {
 		return $this->mainContent->filter( 'h1.title' )->text();
 	}
 
-	public function getId(): int {
+	public function getId(): ?int {
 		return array_shift( $this->getReportIds() );
 	}
 

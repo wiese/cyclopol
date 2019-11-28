@@ -17,7 +17,7 @@ class Article {
 
 	public function __construct(
 		string $link,
-		int $id,
+		?int $id,
 		array $previousIds,
 		string $title,
 		string $text,
