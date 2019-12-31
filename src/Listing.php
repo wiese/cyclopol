@@ -6,10 +6,10 @@ namespace Cyclopol;
 use Symfony\Component\DomCrawler\Crawler;
 
 class Listing {
-	private $crawler;
-	private $baseUri;
+	private Crawler $crawler;
+	private string $baseUri;
 
-	public function __construct( string $dom, $baseUri ) {
+	public function __construct( string $dom, string $baseUri ) {
 		$this->crawler = new Crawler( $dom );
 		$this->baseUri = $baseUri;
 	}

@@ -3,7 +3,7 @@
 namespace Cyclopol;
 
 class ArticleTeaser {
-	public $link;
+	public string $link;
 
 	public function __construct( string $link ) {
 		$this->link = $link;

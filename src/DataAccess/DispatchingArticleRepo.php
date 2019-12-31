@@ -7,9 +7,9 @@ use Cyclopol\Article;
 use Exception;
 
 class DispatchingArticleRepo implements ArticleRepo {
-	private $cachedArticleRepo;
-	private $httpArticleRepo;
-	private $lastArticleWasServedFromCache = false;
+	private ArticleRepo $cachedArticleRepo;
+	private HttpArticleRepo $httpArticleRepo;
+	private bool $lastArticleWasServedFromCache = false;
 
 	public function __construct( CachedArticleRepo $cachedArticleRepo, HttpArticleRepo $httpArticleRepo ) {
 		$this->cachedArticleRepo = $cachedArticleRepo;

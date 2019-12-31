@@ -9,7 +9,7 @@ use DateTimeImmutable;
 use DateTimeZone;
 
 class CachedArticleRepo implements ArticleRepo {
-	private $path;
+	private string $path;
 
 	public function __construct( string $path ) {
 		$this->path = $path;

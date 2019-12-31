@@ -4,15 +4,18 @@ declare( strict_types = 1 );
 namespace Cyclopol\TextAnalysis;
 
 class StreetAddress {
-	private $street;
-	private $number;
+	private string $street;
+	private ?string $number;
 
 	public function __construct( string $street, ?string $number = null ) {
 		$this->street = $street;
 		$this->number = $number;
 	}
 
-	public function __toString() {
+	/**
+	 * (Ab)used to deduplicate StreetAddresses in StreetNameAnalyser
+	 */
+	public function __toString(): string {
 		return trim( $this->street . ' ' . $this->number );
 	}
 }

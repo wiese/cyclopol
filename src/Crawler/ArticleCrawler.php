@@ -9,8 +9,8 @@ use DateTimeZone;
 use Symfony\Component\DomCrawler\Crawler;
 
 class ArticleCrawler {
-	private $crawler;
-	private $mainContent;
+	private Crawler $crawler;
+	private Crawler $mainContent;
 	public const DATE_FORMAT = 'Y-m-d H:i';
 
 	public function __construct( string $dom ) {

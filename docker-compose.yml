@@ -2,10 +2,11 @@ version: '3'
 
 services:
   cli:
-    image: 'php:7.3-cli'
+    image: 'docker.io/php:7.4-cli'
     volumes:
       - './:/app'
     working_dir: /app
     environment:
       - CYCLOPOL_BASE_URI
       - CYCLOPOL_DOWNLOAD_USER_AGENT
+

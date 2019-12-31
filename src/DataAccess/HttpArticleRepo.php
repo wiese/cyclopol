@@ -12,7 +12,7 @@ class HttpArticleRepo implements ArticleRepo {
 	private const METHOD_GET = 'GET';
 	private const STATUS_SUCCESS = 200;
 
-	private $httpClient;
+	private HttpClientInterface $httpClient;
 
 	public function __construct( HttpClientInterface $httpClient ) {
 		$this->httpClient = $httpClient;

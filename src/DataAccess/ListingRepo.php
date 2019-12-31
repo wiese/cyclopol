@@ -7,10 +7,10 @@ use Cyclopol\Listing;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class ListingRepo {
-	private $httpClient;
-	private $baseUri;
+	private HttpClientInterface $httpClient;
+	private string $baseUri;
 
-	public function __construct( HttpClientInterface $httpClient, $baseUri ) {
+	public function __construct( HttpClientInterface $httpClient, string $baseUri ) {
 		$this->httpClient = $httpClient;
 		$this->baseUri = $baseUri;
 	}

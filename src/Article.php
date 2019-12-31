@@ -7,13 +7,13 @@ use DateTimeInterface;
 
 class Article {
 
-	public $link;
-	public $id;
-	public $previousIds;
-	public $title;
-	public $text;
-	public $date;
-	public $categories;
+	public string $link;
+	public ?int $id;
+	public array $previousIds;
+	public string $title;
+	public string $text;
+	public DateTimeInterface $date;
+	public string $categories;
 
 	public function __construct(
 		string $link,
