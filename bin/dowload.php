@@ -42,6 +42,7 @@ do {
 
 	$listing = $listingRepo->getListing( $page );
 	if ( !$listing ) {
+		echo "could not find listing $page\n";
 		break;
 	}
 
