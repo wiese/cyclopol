@@ -59,6 +59,7 @@ do {
 		}
 
 		if ( $articleRepo->lastArticleWasServedFromCache() ) {
+		    // on cancelled previous runs this may result in unreachable entries
 			echo "reached known article. looking no further\n";
 			break 2;
 		}
