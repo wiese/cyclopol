@@ -54,6 +54,10 @@ class StreetNameAnalyserTest extends TestCase {
 			[ new StreetAddress( 'Müllerstraße' ), new StreetAddress( 'Schlagring', '8' ) ],
 			'...an der Ecke Müllerstraße mit einem Schlagring 8 mal geschlagen...',
 		];
+		yield [
+		    [ new StreetAddress( 'Einmündung Straße' ) ],
+		    'Dort, an der Einmündung Straße der Pariser Kommune/An der Ostbahn, fanden sie einen BMW',
+		];
 	}
 
 	/**
