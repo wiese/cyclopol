@@ -1,6 +1,6 @@
 <?php
 
-namespace Cyclopol;
+namespace Cyclopol\DataModel;
 
 class ArticleTeaser {
 	public string $link;

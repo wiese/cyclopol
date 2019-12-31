@@ -1,7 +1,7 @@
 <?php
 declare( strict_types = 1 );
 
-namespace Cyclopol\TextAnalysis;
+namespace Cyclopol\DataModel;
 
 class StreetAddress {
 	private string $street;

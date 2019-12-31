@@ -3,7 +3,7 @@ declare( strict_types = 1 );
 
 namespace Cyclopol\DataAccess;
 
-use Cyclopol\Article;
+use Cyclopol\DataModel\Article;
 use Cyclopol\Crawler\ArticleCrawler;
 use Exception;
 use Symfony\Contracts\HttpClient\HttpClientInterface;

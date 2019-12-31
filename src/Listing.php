@@ -3,6 +3,7 @@ declare( strict_types = 1 );
 
 namespace Cyclopol;
 
+use Cyclopol\DataModel\ArticleTeaser;
 use Symfony\Component\DomCrawler\Crawler;
 
 class Listing {

@@ -1,9 +1,9 @@
 <?php
 declare( strict_types = 1 );
 
-namespace Cyclopol\Tests;
+namespace Cyclopol\Tests\DataModel;
 
-use Cyclopol\Article;
+use Cyclopol\DataModel\Article;
 use PHPUnit\Framework\TestCase;
 use DateTimeImmutable;
 

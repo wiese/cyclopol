@@ -3,6 +3,8 @@ declare( strict_types = 1 );
 
 namespace Cyclopol\TextAnalysis;
 
+use Cyclopol\DataModel\StreetAddress;
+
 class StreetNameAnalyser {
 
 	private const PATTERNS = [

@@ -3,7 +3,7 @@ declare( strict_types = 1 );
 
 namespace Cyclopol\DataAccess;
 
-use Cyclopol\Article;
+use Cyclopol\DataModel\Article;
 use Exception;
 use DateTimeImmutable;
 use DateTimeZone;

@@ -3,8 +3,8 @@ declare( strict_types = 1 );
 
 namespace Cyclopol\Tests\TextAnalysis;
 
+use Cyclopol\DataModel\StreetAddress;
 use Cyclopol\TextAnalysis\StreetNameAnalyser;
-use Cyclopol\TextAnalysis\StreetAddress;
 use PHPUnit\Framework\TestCase;
 
 class StreetNameAnalyserTest extends TestCase {
