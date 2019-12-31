@@ -7,7 +7,6 @@ use Cyclopol\DataAccess\ListingRepo;
 use Cyclopol\DataAccess\CachedArticleRepo;
 use Cyclopol\DataAccess\DispatchingArticleRepo;
 use Cyclopol\DataAccess\HttpArticleRepo;
-use Cyclopol\TextAnalysis\StreetNameAnalyser;
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\HttpKernel\HttpCache\Store;
 use Symfony\Component\HttpClient\CachingHttpClient;
