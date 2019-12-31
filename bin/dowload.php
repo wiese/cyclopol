@@ -48,7 +48,6 @@ do {
 
 	echo "found listing $page\n";
 
-	$i = 0;
 	foreach ( $listing->getArticleTeasers() as $teaser ) {
 		try {
 			echo "inspecting article link {$teaser->getLink()}\n";
