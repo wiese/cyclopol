@@ -35,9 +35,10 @@ $articleRepo = new DispatchingArticleRepo(
 $page = 0;
 $articles = [];
 do {
-    if (++$page > 2) {
+	$page++;
+	if ( $page > 2 ) {
 		break;
-    }
+	}
 
 	$listing = $listingRepo->getListing( $page );
 	if ( !$listing ) {
