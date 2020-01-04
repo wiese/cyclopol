@@ -1,12 +1,12 @@
 <?php
 declare( strict_types = 1 );
 
-namespace Cyclopol;
+namespace Cyclopol\Crawler;
 
 use Cyclopol\DataModel\ArticleTeaser;
 use Symfony\Component\DomCrawler\Crawler;
 
-class Listing {
+class ListingCrawler {
 	private Crawler $crawler;
 	private string $baseUri;
 
