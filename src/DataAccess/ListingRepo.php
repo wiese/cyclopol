@@ -16,7 +16,7 @@ class ListingRepo {
 	}
 
 	public function getListing( $page ): ?Listing {
-		$response = $this->httpClient->request( 'GET', '/polizei/polizeimeldungen/archiv/2019/', [
+		$response = $this->httpClient->request( 'GET', '/polizei/polizeimeldungen/archiv/2020/', [
 			'query' => [
 				'page_at_1_0' => $page
 			]

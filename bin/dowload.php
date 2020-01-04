@@ -25,7 +25,7 @@ $httpClient = HttpClient::create( $httpClientOptions );
 $store = new Store( __DIR__ . '/../var/cache/http' );
 $cachingHttpClient = new CachingHttpClient( $httpClient, $store, $httpClientOptions );
 
-$listingRepo = new ListingRepo( $httpClient, $baseUri ); // TODO pass url configuration
+$listingRepo = new ListingRepo( $httpClient, $baseUri ); // TODO pass url configuration, year in particular!
 $articleRepo = new DispatchingArticleRepo(
 	new CachedArticleRepo( __DIR__ . '/../var/cache/article' ),
 	new HttpArticleRepo( $cachingHttpClient )
