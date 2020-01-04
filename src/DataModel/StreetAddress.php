@@ -18,5 +18,8 @@ class StreetAddress {
 	public function __toString(): string {
 		return trim( $this->street . ' ' . $this->number );
 	}
-}
 
+	public function hasNumber(): bool {
+	    return $this->number !== null;
+	}
+}

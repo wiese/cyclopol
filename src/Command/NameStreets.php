@@ -6,6 +6,7 @@ namespace Cyclopol\Command;
 use Cyclopol\DataAccess\ListingRepo;
 use Cyclopol\DataAccess\CachedArticleRepo;
 use Cyclopol\TextAnalysis\StreetNameAnalyser;
+use Cyclopol\GeoCoding\StreetAddressGeoCoder;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -30,12 +31,21 @@ class NameStreets extends Command {
                 'User-Agent' => getenv( 'CYCLOPOL_DOWNLOAD_USER_AGENT' ),
             ],
         ] );
-        
+
+        $geoCoder = new StreetAddressGeoCoder(
+            HttpClient::create( [
+                'base_uri' => 'https://nominatim.openstreetmap.org',
+                'headers' => [
+                    'User-Agent' => getenv( 'CYCLOPOL_DOWNLOAD_USER_AGENT' ),
+                ],
+            ] )
+        );
+
         $listingRepo = new ListingRepo( $httpClient ); // TODO work with what we have locally
 
         $page = 1;
         $listing = $listingRepo->getListing( $page );
-        
+
         if ( !$listing ) {
             $output->writeln( "<error>could not find listing $page</error>" );
             return 1;
@@ -58,7 +68,23 @@ class NameStreets extends Command {
             
             $streetNames = $streetNameAnalyser->getStreetNames( $article->text );
             if ( count( $streetNames ) ) {
-                $output->writeln( "\t" . implode( ', ', $streetNames ) . ' - ' . $article->categories );
+                foreach( $streetNames as $streetName ) {
+                    // TODO ignore district ("categories") if "berlinweit" or "bezirksübergreifend")
+                    
+                    $output->writeln( "\t" . $streetName . ' - ' . $article->categories );
+                    $coordinates = $geoCoder->getCoordinates( $streetName, $article->categories );
+                    
+                    // TODO ignore coordinates way outside berlin (maybe even in the geoCoder), e.g.
+                    // Stettiner Straße - Mitte
+                    // = Stettiner Straße, Mitte, Dülmen, Kreis Coesfeld, Regierungsbezirk Münster, Nordrhein-Westfalen, 48249, Deutschland
+                    
+                    if ( $coordinates ) {
+                        $output->writeln( "\t" . $coordinates );
+                    } else {
+                        $output->writeln( "\t<datahole>???</datahole>" );
+                    }
+                    usleep( 200000 );
+                }
             } else {
                 $output->writeln( "\t" . '<datahole>???</datahole>' );
             }
