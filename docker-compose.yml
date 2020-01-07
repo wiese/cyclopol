@@ -2,11 +2,27 @@ version: '3'
 
 services:
   cli:
-    image: 'docker.io/php:7.4-cli'
+    build: './'
     volumes:
       - './:/app'
     working_dir: /app
     environment:
       - CYCLOPOL_BASE_URI
       - CYCLOPOL_DOWNLOAD_USER_AGENT
+      - MYSQL_HOST=db
+      - MYSQL_USER
+      - MYSQL_PASSWORD
+      - MYSQL_DATABASE
+  db:
+    image: 'docker.io/mariadb:10.4.11'
+    volumes:
+      - cyclopol-db:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=toor
+      - MYSQL_USER
+      - MYSQL_PASSWORD
+      - MYSQL_DATABASE
+
+volumes:
+  cyclopol-db:
 

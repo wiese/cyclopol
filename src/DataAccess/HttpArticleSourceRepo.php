@@ -3,12 +3,12 @@ declare( strict_types = 1 );
 
 namespace Cyclopol\DataAccess;
 
-use Cyclopol\DataModel\Article;
+use Cyclopol\DataModel\ArticleSource;
 use Cyclopol\Crawler\ArticleCrawler;
 use Exception;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
-class HttpArticleRepo implements ArticleRepo {
+class HttpArticleSourceRepo {
 	private const METHOD_GET = 'GET';
 	private const STATUS_SUCCESS = 200;
 
@@ -18,14 +18,22 @@ class HttpArticleRepo implements ArticleRepo {
 		$this->httpClient = $httpClient;
 	}
 
-	public function getArticle( string $link ): Article {
+	public function get( string $link ): ArticleSource {
 		$response = $this->httpClient->request( self::METHOD_GET, $link );
 
 		if ( $response->getStatusCode() !== self::STATUS_SUCCESS ) {
 			throw new Exception( "Article not found: $link, status {$response->getStatusCode()}" );
 		}
 
-		$crawler = new ArticleCrawler( $response->getContent() );
+		return new ArticleSource(
+		    $link,
+		    $response->getContent(),
+	    );
+	}
+}
+
+/**
+		$crawler = new ArticleCrawler(  );
 
 		return new Article(
 			$link,
@@ -36,6 +44,4 @@ class HttpArticleRepo implements ArticleRepo {
 			$crawler->getTime(),
 			$crawler->getCategories()
 		);
-	}
-}
-
+*/

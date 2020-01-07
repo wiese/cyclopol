@@ -3,34 +3,43 @@ declare( strict_types = 1 );
 
 namespace Cyclopol\Command;
 
-use Cyclopol\DataAccess\ListingRepo;
-use Cyclopol\DataAccess\CachedArticleRepo;
+use Cyclopol\DataModel\ArticleSource;
 use Cyclopol\TextAnalysis\StreetNameAnalyser;
 use Cyclopol\GeoCoding\StreetAddressGeoCoder;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 use Symfony\Component\HttpClient\HttpClient;
+use Doctrine\ORM\EntityManager;
 
 class NameStreets extends Command {
     protected static $defaultName = 'app:name-streets';
 
+    private EntityManager $entityManager;
+
+    public function __construct( EntityManager $entityManager ) {
+        $this->entityManager = $entityManager;
+        parent::__construct();
+    }
+
     protected function configure() {
         $this
             ->setDescription( 'Shows street names for the latest articles.' )
-            ->setHelp( 'Street names, district.' );
+            ->setHelp( 'Street names, district.' )
+            ->addOption(
+                'throttling',
+                null,
+                InputOption::VALUE_OPTIONAL,
+                'By how many microseconds to throttle consecutive HTTP requests',
+                200000,
+            )
+        ;
     }
     
     protected function execute( InputInterface $input, OutputInterface $output ) {
-        $articleRepo = new CachedArticleRepo( __DIR__ . '/../../var/cache/article' );
         $streetNameAnalyser = new StreetNameAnalyser();
-        $httpClient = HttpClient::create( [
-            'base_uri' => getenv( 'CYCLOPOL_BASE_URI' ),
-            'headers' => [
-                'User-Agent' => getenv( 'CYCLOPOL_DOWNLOAD_USER_AGENT' ),
-            ],
-        ] );
 
         $geoCoder = new StreetAddressGeoCoder(
             HttpClient::create( [
@@ -41,38 +50,25 @@ class NameStreets extends Command {
             ] )
         );
 
-        $listingRepo = new ListingRepo( $httpClient ); // TODO work with what we have locally
+        $output->writeln( '<error>TODO create Article Model, translate ArticleSource to Article, read from Article</error>' );
+        return 1;
 
-        $page = 1;
-        $listing = $listingRepo->getListing( $page );
-
-        if ( !$listing ) {
-            $output->writeln( "<error>could not find listing $page</error>" );
-            return 1;
-        }
-        
-        $output->writeln( "found listing $page" );
+        $articleRepo = $this->entityManager->getRepository( Article::class );
 
         $outputStyle = new OutputFormatterStyle( 'red', 'yellow', [ 'bold' ] );
         $output->getFormatter()->setStyle( 'datahole', $outputStyle );
         
-        foreach ( $listing->getArticleTeasers() as $teaser ) {
-            $output->writeln( $teaser->getLink() );
+        foreach ( $articleRepo->findAll() as $article ) {
+            $output->writeln( $article->getLink() );
 
-            try {
-                $article = $articleRepo->getArticle( $teaser->getLink() );
-            } catch( Exception $e ) {
-                $output->writeln( '<error>stopping to get articles after problem: ' . $e->getMessage() . '</error>' );
-                return 1;
-            }
-            
-            $streetNames = $streetNameAnalyser->getStreetNames( $article->text );
+            $streetNames = $streetNameAnalyser->getStreetNames( $article->getText() );
             if ( count( $streetNames ) ) {
                 foreach( $streetNames as $streetName ) {
                     // TODO ignore district ("categories") if "berlinweit" or "bezirksübergreifend")
-                    
-                    $output->writeln( "\t" . $streetName . ' - ' . $article->categories );
-                    $coordinates = $geoCoder->getCoordinates( $streetName, $article->categories );
+
+                    $district = $article->getDistrict();
+                    $output->writeln( "\t" . $streetName . ' - ' . $district );
+                    $coordinates = $geoCoder->getCoordinates( $streetName, $district );
                     
                     // TODO ignore coordinates way outside berlin (maybe even in the geoCoder), e.g.
                     // Stettiner Straße - Mitte
@@ -83,7 +79,8 @@ class NameStreets extends Command {
                     } else {
                         $output->writeln( "\t<datahole>???</datahole>" );
                     }
-                    usleep( 200000 );
+
+                    $this->throttle( $input );
                 }
             } else {
                 $output->writeln( "\t" . '<datahole>???</datahole>' );
@@ -91,5 +88,9 @@ class NameStreets extends Command {
         }
         
         return 0;
+    }
+
+    private function throttle( InputInterface $input ) {
+        usleep( $input->getOption( 'throttling' ) );
     }
 }

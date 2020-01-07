@@ -2,7 +2,7 @@
 <?php
 declare( strict_types = 1 );
 
-require_once __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__ . '/../bootstrap.php';
 
 use Symfony\Component\Console\Application;
 use Cyclopol\Command\DownloadArticles;
@@ -10,7 +10,7 @@ use Cyclopol\Command\NameStreets;
 
 $application = new Application();
 
-$application->add( new DownloadArticles() );
-$application->add( new NameStreets() );
+$application->add( new DownloadArticles( $entityManager ) );
+$application->add( new NameStreets( $entityManager ) );
 
 $application->run();

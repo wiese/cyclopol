@@ -7,6 +7,11 @@ use Cyclopol\DataModel\StreetAddress;
 
 class StreetNameAnalyser {
 
+    /**
+     * TODO
+     * * "Promenade"
+     * * hyphenated street names
+     */
 	private const PATTERNS = [
 		'(' .
 			'(?:[\w-]+|[A-Z][\w-]+\s)' .

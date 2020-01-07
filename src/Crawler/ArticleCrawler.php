@@ -28,6 +28,9 @@ class ArticleCrawler {
 		return $this->mainContent->filter( 'h1.title' )->text();
 	}
 
+	/**
+     * TODO these seem to start from 0 every year
+	 */
 	public function getId(): ?int {
 		return array_shift( $this->getReportIds() );
 	}

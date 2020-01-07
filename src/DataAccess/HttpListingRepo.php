@@ -6,7 +6,7 @@ namespace Cyclopol\DataAccess;
 use Cyclopol\Crawler\ListingCrawler;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
-class ListingRepo {
+class HttpListingRepo {
 	private HttpClientInterface $httpClient;
 	private string $baseUri;
 

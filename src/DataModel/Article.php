@@ -7,13 +7,13 @@ use DateTimeInterface;
 
 class Article {
 
-	public string $link;
-	public ?int $id;
-	public array $previousIds;
-	public string $title;
-	public string $text;
-	public DateTimeInterface $date;
-	public string $categories;
+	private string $link;
+	private ?int $id;
+	private array $previousIds;
+	private string $title;
+	private string $text;
+	private DateTimeInterface $date;
+	private string $categories;
 
 	public function __construct(
 		string $link,
@@ -33,5 +33,12 @@ class Article {
 		$this->categories = $categories;
 	}
 
+	public function getLink(): string {
+	    return $this->link;
+	}
+
+	public function getDistrict(): string {
+	    return $this->categories;
+	}
 }
 
