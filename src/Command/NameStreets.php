@@ -3,7 +3,7 @@ declare( strict_types = 1 );
 
 namespace Cyclopol\Command;
 
-use Cyclopol\DataModel\ArticleSource;
+use Cyclopol\DataModel\Article;
 use Cyclopol\TextAnalysis\StreetNameAnalyser;
 use Cyclopol\GeoCoding\StreetAddressGeoCoder;
 use Symfony\Component\Console\Command\Command;
@@ -50,14 +50,11 @@ class NameStreets extends Command {
             ] )
         );
 
-        $output->writeln( '<error>TODO create Article Model, translate ArticleSource to Article, read from Article</error>' );
-        return 1;
-
         $articleRepo = $this->entityManager->getRepository( Article::class );
 
         $outputStyle = new OutputFormatterStyle( 'red', 'yellow', [ 'bold' ] );
         $output->getFormatter()->setStyle( 'datahole', $outputStyle );
-        
+
         foreach ( $articleRepo->findAll() as $article ) {
             $output->writeln( $article->getLink() );
 
@@ -66,9 +63,9 @@ class NameStreets extends Command {
                 foreach( $streetNames as $streetName ) {
                     // TODO ignore district ("categories") if "berlinweit" or "bezirksübergreifend")
 
-                    $district = $article->getDistrict();
-                    $output->writeln( "\t" . $streetName . ' - ' . $district );
-                    $coordinates = $geoCoder->getCoordinates( $streetName, $district );
+                    $districts = $article->getDistricts();
+                    $output->writeln( "\t" . $streetName . ' - ' . $districts );
+                    $coordinates = $geoCoder->getCoordinates( $streetName, $districts );
                     
                     // TODO ignore coordinates way outside berlin (maybe even in the geoCoder), e.g.
                     // Stettiner Straße - Mitte

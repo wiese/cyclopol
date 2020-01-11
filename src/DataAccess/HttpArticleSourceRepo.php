@@ -4,7 +4,6 @@ declare( strict_types = 1 );
 namespace Cyclopol\DataAccess;
 
 use Cyclopol\DataModel\ArticleSource;
-use Cyclopol\Crawler\ArticleCrawler;
 use Exception;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
@@ -31,17 +30,3 @@ class HttpArticleSourceRepo {
 	    );
 	}
 }
-
-/**
-		$crawler = new ArticleCrawler(  );
-
-		return new Article(
-			$link,
-			$crawler->getId(),
-			$crawler->getPreviousIds(),
-			$crawler->getTitle(),
-			$crawler->getText(),
-			$crawler->getTime(),
-			$crawler->getCategories()
-		);
-*/
