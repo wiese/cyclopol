@@ -9,9 +9,7 @@ use DateTimeZone;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * TODO use repositoryClass=Cyclopol\DataAccess\ArticleSourceRepository
- *
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="Cyclopol\DataAccess\ArticleSourceRepository")
  */
 class ArticleSource {
 
