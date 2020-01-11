@@ -16,6 +16,10 @@ class StreetNameAnalyserTest extends TestCase {
 		yield [ 'Bahnsteig' ];
 		yield [ 'Parkplatz' ];
 		yield [ 'Rettungsgasse' ];
+		yield [ 'Umweg' ];
+		yield [ 'Radweg' ];
+		yield [ 'Fußweg' ];
+		yield [ 'Schlagring' ];
 	}
 
 	public function getFineSamples() {
@@ -50,10 +54,6 @@ class StreetNameAnalyserTest extends TestCase {
 	}
 
 	public function getSamplesWithKnownWeaknesses() {
-		yield [
-			[ new StreetAddress( 'Müllerstraße' ), new StreetAddress( 'Schlagring', '8' ) ],
-			'...an der Ecke Müllerstraße mit einem Schlagring 8 mal geschlagen...',
-		];
 		yield [
 		    [ new StreetAddress( 'Einmündung Straße' ) ],
 		    'Dort, an der Einmündung Straße der Pariser Kommune/An der Ostbahn, fanden sie einen BMW',

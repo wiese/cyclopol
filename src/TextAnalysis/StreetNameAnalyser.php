@@ -11,6 +11,10 @@ class StreetNameAnalyser {
      * TODO
      * * "Promenade"
      * * hyphenated street names
+     * * "~brücke"
+     *
+     * IDEAS
+     * * find location by mentioned "(U/S-)Bahnhof"
      */
 	private const PATTERNS = [
 		'(' .
@@ -24,7 +28,11 @@ class StreetNameAnalyser {
 		'bahnsteig',
 		'gehweg',
 		'parkplatz',
-		'rettungsgasse'
+		'rettungsgasse',
+	    'radweg',
+	    'fußweg',
+	    'umweg',
+	    'schlagring'
 	];
 
 	public function getStreetNames( string $text ): array {
