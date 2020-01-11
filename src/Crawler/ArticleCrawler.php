@@ -36,6 +36,7 @@ class ArticleCrawler {
 	}
 
 	/**
+	 * FIXME "previousIds" can contain those from former years. how to overcome?
 	 * @return int[]
 	 */
 	public function getPreviousIds(): array {
