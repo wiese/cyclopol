@@ -8,18 +8,13 @@ use Cyclopol\DataModel\StreetAddress;
 class StreetNameAnalyser {
 
     /**
-     * TODO
-     * * "Promenade"
-     * * hyphenated street names
-     * * "~brücke"
-     *
      * IDEAS
      * * find location by mentioned "(U/S-)Bahnhof"
      */
 	private const PATTERNS = [
 		'(' .
 			'(?:[\w-]+|[A-Z][\w-]+\s)' .
-			'(?:[sS]tra(?:ß|ss)e|[pP]latz|[pP]ark|[aA]llee|[wW]eg|[gG]asse|[wW]inkel|[rR]ing|[pP]fuhl|[sS]teig|[dD]amm)' .
+			'(?:[sS]tra(?:ß|ss)e|[pP]latz|[pP]ark|[aA]llee|[wW]eg|[gG]asse|[wW]inkel|[rR]ing|[pP]fuhl|[sS]teig|[dD]amm|[bB]rücke|[uU]fer|[bB]erg|[pP]romenade)' .
 		')' .
 		'(?:\s+(?:Nr\.?|)\s?(\d+\w?)|\b)',
 	];

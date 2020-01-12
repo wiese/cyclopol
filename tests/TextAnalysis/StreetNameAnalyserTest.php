@@ -51,12 +51,28 @@ class StreetNameAnalyserTest extends TestCase {
 			[ new StreetAddress( 'Friedrich-Jahn-Park', '8' ), new StreetAddress( 'Hedwig-Lange-Gasse', '123' ) ],
 			'...an der Ecke Friedrich-Jahn-Park 8 und Hedwig-Lange-Gasse 123 wurde Geschichte geschrieben...',
 		];
+		yield [
+		    [ new StreetAddress( 'Lutherbrücke' ) ],
+		    '...beim Überqueren der Lutherbrücke nahe dem Kanzleramt...',
+		];
+		yield [
+		    [ new StreetAddress( 'Tempelhofer Ufer' ) ],
+		    '...nahe dem Tempelhofer Ufer an der U-Bahnstation...',
+		];
+		yield [
+		    [ new StreetAddress( 'Greenwichpromenade' ) ],
+		    '...zur Dampferanlegestelle Greenwichpromenade am Tegeler See...',
+		];
 	}
 
 	public function getSamplesWithKnownWeaknesses() {
 		yield [
 		    [ new StreetAddress( 'Einmündung Straße' ) ],
 		    'Dort, an der Einmündung Straße der Pariser Kommune/An der Ostbahn, fanden sie einen BMW',
+		];
+		yield [
+		    [ new StreetAddress( 'Steinberg' ) ],
+		    'die Nobeladresse Am Steinberg wurde schon öfter zum Ziel',
 		];
 	}
 
