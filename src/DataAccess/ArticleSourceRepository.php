@@ -6,7 +6,7 @@ namespace Cyclopol\DataAccess;
 use Doctrine\ORM\EntityRepository;
 
 class ArticleSourceRepository extends EntityRepository {
-    public function findAll() {
-        return $this->findBy( [], [ 'link' => 'ASC' ] );
-    }
+	public function findAll() {
+		return $this->findBy( [], [ 'link' => 'ASC' ] );
+	}
 }

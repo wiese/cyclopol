@@ -4,20 +4,20 @@ declare( strict_types = 1 );
 namespace Cyclopol\Tests\DataModel;
 
 use Cyclopol\DataModel\Article;
-use PHPUnit\Framework\TestCase;
 use DateTimeImmutable;
+use PHPUnit\Framework\TestCase;
 
 class ArticleTest extends TestCase {
 
 	public function testConstructionAndAccessors(): void {
-	    $link = '/u/r/l.html';
-	    $reportId = 4711;
-	    $title = 'title';
-	    $text = 'foo bar baz';
-	    $districts = 'districts';
+		$link = '/u/r/l.html';
+		$reportId = 4711;
+		$title = 'title';
+		$text = 'foo bar baz';
+		$districts = 'districts';
 		$sut = new Article(
 			$link,
-		    $reportId,
+			$reportId,
 			[ 815 ],
 			$title,
 			$text,
@@ -34,4 +34,3 @@ class ArticleTest extends TestCase {
 	}
 
 }
-

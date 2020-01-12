@@ -19,9 +19,11 @@ class ArticleCrawler {
 	}
 
 	public function getText(): string {
-		return implode( "\n", $this->mainContent->filter( '.body .textile' )->each( function ( $node, $i ) {
-			return trim( $node->text() );
-		} ) );
+		return implode( "\n", $this->mainContent
+			->filter( '.body .textile' )
+			->each( function ( $node, $i ) {
+			  return trim( $node->text() );
+			} ) );
 	}
 
 	public function getTitle(): string {
@@ -29,7 +31,7 @@ class ArticleCrawler {
 	}
 
 	/**
-     * TODO these seem to start from 0 every year
+	 * TODO these seem to start from 0 every year
 	 */
 	public function getId(): ?int {
 		return array_shift( $this->getReportIds() );
@@ -37,6 +39,7 @@ class ArticleCrawler {
 
 	/**
 	 * FIXME "previousIds" can contain those from former years. how to overcome?
+	 *
 	 * @return int[]
 	 */
 	public function getPreviousIds(): array {
@@ -63,9 +66,8 @@ class ArticleCrawler {
 
 	private function getReportIds(): array {
 		if ( preg_match_all( '/Nr\.\s?(\d+)/', $this->getText(), $matches ) ) {
-			return array_map ( 'intval', $matches[ 1 ] );
+			return array_map( 'intval', $matches[ 1 ] );
 		}
 		return [];
 	}
 }
-

@@ -3,8 +3,8 @@ declare( strict_types = 1 );
 
 namespace Cyclopol\DataModel;
 
-use DateTimeInterface;
 use DateTimeImmutable;
+use DateTimeInterface;
 use DateTimeZone;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -13,10 +13,15 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class ArticleSource {
 
-    /** @ORM\Id @ORM\Column(type="integer") @ORM\GeneratedValue */
-    private $id; // can't be typed to prevent "typed property id must not be accessed before initialization"
+	/**
+	 * Can't be typed as managed by doctrine through reflection
+	 * @ORM\Id
+	 * @ORM\Column(type="integer")
+	 * @ORM\GeneratedValue
+	 */
+	private $id;
 
-    /** @ORM\Column(type="string", unique=true, length=255) */
+	/** @ORM\Column(type="string", unique=true, length=255) */
 	private string $link;
 
 	/** @ORM\Column(type="text") */
@@ -26,23 +31,23 @@ class ArticleSource {
 	private DateTimeInterface $downloadedAt;
 
 	public function __construct(
-        string $link,
-	    string $source
-    ) {
-	    $this->link = $link;
-	    $this->source = $source;
-	    $this->downloadedAt = new DateTimeImmutable( 'now', new DateTimeZone( 'UTC' ) );
+		string $link,
+		string $source
+	) {
+		$this->link = $link;
+		$this->source = $source;
+		$this->downloadedAt = new DateTimeImmutable( 'now', new DateTimeZone( 'UTC' ) );
 	}
 
 	public function getLink(): string {
-	    return $this->link;
+		return $this->link;
 	}
 
 	public function getSource(): string {
-	    return $this->source;
+		return $this->source;
 	}
 
 	public function getDownloadedAt(): DateTimeImmutable {
-	    return $this->downloadedAt;
+		return $this->downloadedAt;
 	}
 }

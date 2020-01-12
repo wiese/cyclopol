@@ -25,8 +25,8 @@ class HttpArticleSourceRepo {
 		}
 
 		return new ArticleSource(
-		    $link,
-		    $response->getContent(),
-	    );
+			$link,
+			$response->getContent(),
+		);
 	}
 }

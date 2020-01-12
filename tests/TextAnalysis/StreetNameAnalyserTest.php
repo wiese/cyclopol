@@ -12,7 +12,7 @@ class StreetNameAnalyserTest extends TestCase {
 	public function getNoMatchSamples() {
 		yield [ '' ];
 		yield [ 'lorem ipsum' ];
-		yield [	'Ein Gehweg bleibt unerkannt' ];
+		yield [ 'Ein Gehweg bleibt unerkannt' ];
 		yield [ 'Bahnsteig' ];
 		yield [ 'Parkplatz' ];
 		yield [ 'Rettungsgasse' ];
@@ -25,7 +25,7 @@ class StreetNameAnalyserTest extends TestCase {
 	public function getFineSamples() {
 		yield [
 			[ new StreetAddress( 'Bruno-Taut-Ring', '2' ) ],
-			'Nach Zeugenaussagen geriet er gegen 9.45 Uhr vor der Häuserzeile Bruno-Taut-Ring Nr. 2 bis 2 b mit einem...',
+			'gegen 9.45 Uhr vor der Häuserzeile Bruno-Taut-Ring Nr. 2 bis 2 b mit...',
 		];
 		yield [
 			[ new StreetAddress( 'Herrmannplatz' ), new StreetAddress( 'Karl-Marx-Allee' ) ],
@@ -33,7 +33,7 @@ class StreetNameAnalyserTest extends TestCase {
 		];
 		yield [
 			[ new StreetAddress( 'Hasenwinkel', '47c' ) ],
-			'...Idylle wurde jäh unterbrochen als am Sonntag im Hasenwinkel 47c das Bier alle war...',
+			'...Idylle jäh unterbrochen als sonntags im Hasenwinkel 47c das Bier alle...',
 		];
 		yield [
 			[ new StreetAddress( 'Müllerstraße' ) ],
@@ -45,34 +45,37 @@ class StreetNameAnalyserTest extends TestCase {
 		];
 		yield [
 			[ new StreetAddress( 'Deichstrasse' ) ],
-			'...spitze Formulierung an der Deichstrasse löst spontan poetry slam aus - Kollegen gewinnen ersten Preis...',
+			'...an der Deichstrasse löst spontan poetry slam aus - Kollegen gewinnen...',
 		];
 		yield [
-			[ new StreetAddress( 'Friedrich-Jahn-Park', '8' ), new StreetAddress( 'Hedwig-Lange-Gasse', '123' ) ],
-			'...an der Ecke Friedrich-Jahn-Park 8 und Hedwig-Lange-Gasse 123 wurde Geschichte geschrieben...',
+			[
+				new StreetAddress( 'Friedrich-Jahn-Park', '8' ),
+				new StreetAddress( 'Hedwig-Lange-Gasse', '123' ),
+			],
+			'...Ecke Friedrich-Jahn-Park 8 und Hedwig-Lange-Gasse 123 wurde Geschichte geschrieben...',
 		];
 		yield [
-		    [ new StreetAddress( 'Lutherbrücke' ) ],
-		    '...beim Überqueren der Lutherbrücke nahe dem Kanzleramt...',
+			[ new StreetAddress( 'Lutherbrücke' ) ],
+			'...beim Überqueren der Lutherbrücke nahe dem Kanzleramt...',
 		];
 		yield [
-		    [ new StreetAddress( 'Tempelhofer Ufer' ) ],
-		    '...nahe dem Tempelhofer Ufer an der U-Bahnstation...',
+			[ new StreetAddress( 'Tempelhofer Ufer' ) ],
+			'...nahe dem Tempelhofer Ufer an der U-Bahnstation...',
 		];
 		yield [
-		    [ new StreetAddress( 'Greenwichpromenade' ) ],
-		    '...zur Dampferanlegestelle Greenwichpromenade am Tegeler See...',
+			[ new StreetAddress( 'Greenwichpromenade' ) ],
+			'...zur Dampferanlegestelle Greenwichpromenade am Tegeler See...',
 		];
 	}
 
 	public function getSamplesWithKnownWeaknesses() {
 		yield [
-		    [ new StreetAddress( 'Einmündung Straße' ) ],
-		    'Dort, an der Einmündung Straße der Pariser Kommune/An der Ostbahn, fanden sie einen BMW',
+			[ new StreetAddress( 'Einmündung Straße' ) ],
+			'Dort, an der Einmündung Straße der Pariser Kommune/An der Ostbahn, fanden sie einen BMW',
 		];
 		yield [
-		    [ new StreetAddress( 'Steinberg' ) ],
-		    'die Nobeladresse Am Steinberg wurde schon öfter zum Ziel',
+			[ new StreetAddress( 'Steinberg' ) ],
+			'die Nobeladresse Am Steinberg wurde schon öfter zum Ziel',
 		];
 	}
 
@@ -100,4 +103,3 @@ class StreetNameAnalyserTest extends TestCase {
 		$this->assertEquals( $expected, $sut->getStreetNames( $text ) );
 	}
 }
-

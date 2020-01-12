@@ -24,7 +24,8 @@ class ArticleCrawlerTest extends TestCase {
 			file_get_contents( __DIR__ . '/../fixtures/report_with_two_parents.html' ),
 			[
 				'title' => 'Nach Handtaschenraub - Tatverdächtiger erneut mit Bildern gesucht',
-				'id' => 1146, // this is a known flaw. in fact, there is no known id and the one shown should be the first previousIds
+				// a known flaw - no known id and the one shown should be the first previousIds
+				'id' => 1146,
 				'previousIds' => [ 646 ],
 				'time' => '2019-11-28 08:17',
 				'categories' => 'Mitte',
@@ -41,10 +42,9 @@ class ArticleCrawlerTest extends TestCase {
 		$this->assertSame( $crawler[ 'id' ], $sut->getId() );
 		$this->assertSame( $crawler[ 'previousIds' ], $sut->getPreviousIds() );
 		$time = $sut->getTime();
-		$this->assertSame( $crawler[ 'time' ], $time->format('Y-m-d H:i') );
+		$this->assertSame( $crawler[ 'time' ], $time->format( 'Y-m-d H:i' ) );
 		$this->assertEquals( new DateTimeZone( 'Europe/Berlin' ), $time->getTimezone() );
 		$this->assertSame( $crawler[ 'categories' ], $sut->getCategories() );
 	}
 
 }
-

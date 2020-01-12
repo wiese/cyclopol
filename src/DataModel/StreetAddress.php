@@ -20,6 +20,6 @@ class StreetAddress {
 	}
 
 	public function hasNumber(): bool {
-	    return $this->number !== null;
+		return $this->number !== null;
 	}
 }

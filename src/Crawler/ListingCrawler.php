@@ -16,9 +16,9 @@ class ListingCrawler {
 	}
 
 	public function getArticleTeasers(): array {
-		return $this->crawler->filter('.list-autoteaser li')->each( function( Crawler $teaser ) {
+		return $this->crawler->filter( '.list-autoteaser li' )->each( function ( Crawler $teaser ) {
 			return new ArticleTeaser(
-				$this->baseUri . $teaser->children('.text a')->attr('href')
+				$this->baseUri . $teaser->children( '.text a' )->attr( 'href' )
 			);
 		} );
 	}

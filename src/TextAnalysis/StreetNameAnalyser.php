@@ -7,14 +7,30 @@ use Cyclopol\DataModel\StreetAddress;
 
 class StreetNameAnalyser {
 
-    /**
-     * IDEAS
-     * * find location by mentioned "(U/S-)Bahnhof"
-     */
+	/**
+	 * IDEAS
+	 * * find location by mentioned "(U/S-)Bahnhof"
+	 */
 	private const PATTERNS = [
 		'(' .
 			'(?:[\w-]+|[A-Z][\w-]+\s)' .
-			'(?:[sS]tra(?:ß|ss)e|[pP]latz|[pP]ark|[aA]llee|[wW]eg|[gG]asse|[wW]inkel|[rR]ing|[pP]fuhl|[sS]teig|[dD]amm|[bB]rücke|[uU]fer|[bB]erg|[pP]romenade)' .
+			'(?:' .
+				'[sS]tra(?:ß|ss)e|' .
+				'[pP]latz|' .
+				'[pP]ark|' .
+				'[aA]llee|' .
+				'[wW]eg|' .
+				'[gG]asse|' .
+				'[wW]inkel|' .
+				'[rR]ing|' .
+				'[pP]fuhl|' .
+				'[sS]teig|' .
+				'[dD]amm|' .
+				'[bB]rücke|' .
+				'[uU]fer|' .
+				'[bB]erg|' .
+				'[pP]romenade' .
+			')' .
 		')' .
 		'(?:\s+(?:Nr\.?|)\s?(\d+\w?)|\b)',
 	];
@@ -24,10 +40,10 @@ class StreetNameAnalyser {
 		'gehweg',
 		'parkplatz',
 		'rettungsgasse',
-	    'radweg',
-	    'fußweg',
-	    'umweg',
-	    'schlagring'
+		'radweg',
+		'fußweg',
+		'umweg',
+		'schlagring'
 	];
 
 	public function getStreetNames( string $text ): array {
@@ -49,4 +65,3 @@ class StreetNameAnalyser {
 		return array_unique( $streets );
 	}
 }
-

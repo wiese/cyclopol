@@ -13,4 +13,3 @@ class ArticleTeaser {
 		return $this->link;
 	}
 }
-

@@ -3,8 +3,8 @@ declare( strict_types = 1 );
 
 namespace Cyclopol\DataModel;
 
-use DateTimeInterface;
 use DateTimeImmutable;
+use DateTimeInterface;
 use DateTimeZone;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -13,22 +13,23 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Article {
 
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
-     */
-    private $id; // can't be typed to prevent "typed property id must not be accessed before initialization"
+	/**
+	 * Can't be typed as managed by doctrine through reflection
+	 * @ORM\Id
+	 * @ORM\Column(type="integer")
+	 * @ORM\GeneratedValue
+	 */
+	private $id;
 
-    /**
-     * @ORM\Column(type="string", unique=true, length=255)
-     */
-    private string $link;
+	/**
+	 * @ORM\Column(type="string", unique=true, length=255)
+	 */
+	private string $link;
 
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
-    private ?int $reportId;
+	/**
+	 * @ORM\Column(type="integer", nullable=true)
+	 */
+	private ?int $reportId;
 
 	/**
 	 * TODO normalize
@@ -37,39 +38,39 @@ class Article {
 	private array $previousReportIds;
 
 	/**
-     * @ORM\Column(type="string", length=1024)
-     */
+	 * @ORM\Column(type="string", length=1024)
+	 */
 	private string $title;
 
 	/**
-     * @ORM\Column(type="text")
-     */
+	 * @ORM\Column(type="text")
+	 */
 	private string $text;
 
 	/**
-     * @ORM\Column(type="datetime")
-     */
+	 * @ORM\Column(type="datetime")
+	 */
 	private DateTimeInterface $date;
 
 	/**
 	 * TODO consider processing this. is mixed, often comma separated districts
-     * @ORM\Column(type="string", length=255)
-     */
+	 * @ORM\Column(type="string", length=255)
+	 */
 	private string $districts;
 
 	/**
-     * @ORM\Column(type="datetime")
-     */
+	 * @ORM\Column(type="datetime")
+	 */
 	private DateTimeInterface $createdAt;
 
 	public function __construct(
 		string $link,
 		?int $reportId,
-	    array $previousReportIds,
+		array $previousReportIds,
 		string $title,
 		string $text,
 		DateTimeInterface $date,
-	    string $districts
+		string $districts
 	) {
 		$this->link = $link;
 		$this->reportId = $reportId;
@@ -83,22 +84,22 @@ class Article {
 	}
 
 	public function getLink(): string {
-	    return $this->link;
+		return $this->link;
 	}
 
 	public function getReportId(): ?int {
-	    return $this->reportId;
+		return $this->reportId;
 	}
 
 	public function getTitle(): string {
-	    return $this->title;
+		return $this->title;
 	}
 
 	public function getText(): string {
-	    return $this->text;
+		return $this->text;
 	}
 
 	public function getDistricts(): string {
-	    return $this->districts;
+		return $this->districts;
 	}
 }
