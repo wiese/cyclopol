@@ -115,4 +115,12 @@ class StreetNameAnalyserTest extends TestCase {
 		$sut = new StreetNameAnalyser();
 		$this->assertEquals( $expected, $sut->getStreetNames( $text ) );
 	}
+
+	public function testBlacklistWordDoesNotPreventLaterMatches() {
+		$sut = new StreetNameAnalyser();
+		$this->assertEquals(
+			[ new StreetAddress( 'Kurfürstenstraße' ) ],
+			$sut->getStreetNames( '...eine Rettungsgasse auf der Kurfürstenstraße...' )
+		);
+	}
 }

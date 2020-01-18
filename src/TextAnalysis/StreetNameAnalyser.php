@@ -68,7 +68,7 @@ class StreetNameAnalyser {
 			if ( preg_match_all( '/' . $pattern . '/u', $text, $matches, PREG_UNMATCHED_AS_NULL ) ) {
 				foreach ( $matches[ 1 ] as $key => $street ) {
 					if ( in_array( strtolower( $street ), self::STREET_BLACKLIST ) ) {
-						break;
+						continue 1;
 					}
 					$streets[] = new StreetAddress(
 						$street,
