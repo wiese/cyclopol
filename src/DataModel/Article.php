@@ -9,6 +9,13 @@ use DateTimeZone;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * @ORM\Table(
+ *   uniqueConstraints={
+ *     @ORM\UniqueConstraint(
+ *       columns={ "articleSource_id", "articleCrawlerVersion" }
+ *     )
+ *   }
+ * )
  * @ORM\Entity()
  */
 class Article {
@@ -22,7 +29,17 @@ class Article {
 	private $id;
 
 	/**
-	 * @ORM\Column(type="string", unique=true, length=255)
+	 * @ORM\ManyToOne(targetEntity="Cyclopol\DataModel\ArticleSource")
+	 */
+	private ArticleSource $articleSource;
+
+	/**
+	 * @ORM\Column(type="integer")
+	 */
+	private int $articleCrawlerVersion;
+
+	/**
+	 * @ORM\Column(type="string", length=255)
 	 */
 	private string $link;
 
@@ -64,6 +81,8 @@ class Article {
 	private DateTimeInterface $createdAt;
 
 	public function __construct(
+		ArticleSource $articleSource,
+		int $articleCrawlerVersion,
 		string $link,
 		?int $reportId,
 		array $previousReportIds,
@@ -72,6 +91,9 @@ class Article {
 		DateTimeInterface $date,
 		string $districts
 	) {
+		$this->articleSource = $articleSource;
+		$this->articleCrawlerVersion = $articleCrawlerVersion;
+
 		$this->link = $link;
 		$this->reportId = $reportId;
 		$this->previousReportIds = $previousReportIds;
@@ -81,6 +103,14 @@ class Article {
 		$this->districts = $districts;
 
 		$this->createdAt = new DateTimeImmutable( 'now', new DateTimeZone( 'UTC' ) );
+	}
+
+	public function getArticleSource(): ArticleSource {
+		return $this->articleSource;
+	}
+
+	public function getArticleCrawlerVersion(): int {
+		return $this->articleCrawlerVersion;
 	}
 
 	public function getLink(): string {

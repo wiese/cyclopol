@@ -4,6 +4,7 @@
 		<exclude name="MediaWiki.Commenting.FunctionComment"/>
 		<exclude name="MediaWiki.Commenting.MissingCovers.MissingCovers"/>
 		<exclude name="MediaWiki.Classes.UnusedUseStatement.UnusedUse"/>
+		<exclude name="MediaWiki.Commenting.DocComment.SpacingDocTag"/>
 	</rule>
 	<file>.</file>
 	<arg name="extensions" value="php"/>

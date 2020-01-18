@@ -39,6 +39,10 @@ class ArticleSource {
 		$this->downloadedAt = new DateTimeImmutable( 'now', new DateTimeZone( 'UTC' ) );
 	}
 
+	public function getId(): int {
+		return $this->id;
+	}
+
 	public function getLink(): string {
 		return $this->link;
 	}

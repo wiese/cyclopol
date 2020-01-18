@@ -34,12 +34,16 @@ class ArticlesFromSources extends Command {
 		$outputStyle = new OutputFormatterStyle( 'red', 'yellow', [ 'bold' ] );
 		$output->getFormatter()->setStyle( 'datahole', $outputStyle );
 
-		foreach ( $articleSourceRepo->findAll() as $articleSource ) {
+		$articleCrawlerVersion = ArticleCrawler::VERSION;
+		$sources = $articleSourceRepo->findAllUncrawled( $articleCrawlerVersion );
+		foreach ( $sources as $articleSource ) {
 			$output->writeln( $articleSource->getLink() );
 
 			$crawler = new ArticleCrawler( $articleSource->getSource() );
 
 			$article = new Article(
+				$articleSource,
+				$articleCrawlerVersion,
 				$articleSource->getLink(),
 				$crawler->getId(),
 				$crawler->getPreviousIds(),
@@ -60,7 +64,13 @@ class ArticlesFromSources extends Command {
 			$this->entityManager->persist( $article );
 		}
 
-		$this->entityManager->flush();
+		$n = count( $sources );
+		if ( $n ) {
+			$this->entityManager->flush();
+			$output->writeln( "<info>Persisted $n changes to DB.</info>" );
+		} else {
+			$output->writeln( '<info>Nothing to do, DB is up to date.</info>' );
+		}
 
 		return 0;
 	}
