@@ -15,8 +15,8 @@ use Symfony\Component\HttpClient\CachingHttpClient;
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\HttpKernel\HttpCache\Store;
 
-class DownloadArticles extends Command {
-	protected static $defaultName = 'app:download-articles';
+class DownloadSources extends Command {
+	protected static $defaultName = 'app:download-sources';
 
 	private EntityManager $entityManager;
 
