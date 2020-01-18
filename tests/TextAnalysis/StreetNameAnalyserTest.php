@@ -12,14 +12,31 @@ class StreetNameAnalyserTest extends TestCase {
 	public function getNoMatchSamples() {
 		yield [ '' ];
 		yield [ 'lorem ipsum' ];
+
 		yield [ 'Ein Gehweg bleibt unerkannt' ];
-		yield [ 'Bahnsteig' ];
-		yield [ 'Parkplatz' ];
-		yield [ 'Rettungsgasse' ];
-		yield [ 'Umweg' ];
 		yield [ 'Radweg' ];
 		yield [ 'Fußweg' ];
+		yield [ 'Umweg' ];
+
+		yield [ 'Bahnsteig' ];
+
+		yield [ 'Vorplatz' ];
+		yield [ 'Parkplatz' ];
+
+		yield [ 'Rettungsgasse' ];
+
 		yield [ 'Schlagring' ];
+
+		yield [ 'Kreuzberg' ];
+		yield [ 'Schöneberg' ];
+
+		yield [ 'Bahnbrücke' ];
+		yield [ 'S-Bahnbrücke' ];
+
+		yield [ 'Käufer' ];
+
+		yield [ 'Einmündung Straße der Gerechten' ];
+		yield [ 'Ecke Straße der Gerechten' ];
 	}
 
 	public function getFineSamples() {
@@ -69,11 +86,7 @@ class StreetNameAnalyserTest extends TestCase {
 	}
 
 	public function getSamplesWithKnownWeaknesses() {
-		yield [
-			[ new StreetAddress( 'Einmündung Straße' ) ],
-			'Dort, an der Einmündung Straße der Pariser Kommune/An der Ostbahn, fanden sie einen BMW',
-		];
-		yield [
+		yield [ // two word (before ~straße) street names
 			[ new StreetAddress( 'Steinberg' ) ],
 			'die Nobeladresse Am Steinberg wurde schon öfter zum Ziel',
 		];

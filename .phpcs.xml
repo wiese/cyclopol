@@ -5,6 +5,7 @@
 		<exclude name="MediaWiki.Commenting.MissingCovers.MissingCovers"/>
 		<exclude name="MediaWiki.Classes.UnusedUseStatement.UnusedUse"/>
 		<exclude name="MediaWiki.Commenting.DocComment.SpacingDocTag"/>
+		<exclude name="MediaWiki.WhiteSpace.SpaceBeforeSingleLineComment.NewLineComment"/>
 	</rule>
 	<file>.</file>
 	<arg name="extensions" value="php"/>

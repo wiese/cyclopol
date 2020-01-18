@@ -36,14 +36,30 @@ class StreetNameAnalyser {
 	];
 
 	private const STREET_BLACKLIST = [
-		'bahnsteig',
 		'gehweg',
-		'parkplatz',
-		'rettungsgasse',
 		'radweg',
 		'fußweg',
 		'umweg',
-		'schlagring'
+
+		'bahnsteig',
+
+		'vorplatz',
+		'parkplatz',
+
+		'rettungsgasse',
+
+		'schlagring',
+
+		'kreuzberg', // vs ~berg
+		'schöneberg', // vs ~berg
+
+		'bahnbrücke',
+		's-bahnbrücke',
+
+		'käufer', // vs ~ufer
+
+		'ecke straße', // matching the wrong part
+		'einmündung straße', // matching the wrong part
 	];
 
 	public function getStreetNames( string $text ): array {
