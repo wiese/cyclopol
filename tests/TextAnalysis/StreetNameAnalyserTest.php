@@ -90,6 +90,22 @@ class StreetNameAnalyserTest extends TestCase {
 			[ new StreetAddress( 'Steinberg' ) ],
 			'die Nobeladresse Am Steinberg wurde schon öfter zum Ziel',
 		];
+		yield [
+			[ new StreetAddress( 'U-Bahnhof Platz' ), new StreetAddress( 'Luftbrücke' ) ],
+			'zum U-Bahnhof Platz der Luftbrücke, da dort',
+		];
+		yield [
+			[],
+			'...Café in der Straße Alt-Lichtenrade, bedrohte...',
+		];
+		yield [
+			[],
+			'...auf dem U-Bahnhof Kottbusser Tor einer 33-jährigen...',
+		];
+		yield [
+			[],
+			'...gegen 8.45 Uhr am S-Bahnhof Wuhletal, als die Täter...',
+		];
 	}
 
 	/**
