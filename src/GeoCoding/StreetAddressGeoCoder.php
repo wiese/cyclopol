@@ -16,14 +16,23 @@ class StreetAddressGeoCoder {
 		$this->httpClient = $httpClient;
 	}
 
-	public function getCoordinates( StreetAddress $address, string $district ): ?Coordinates {
-		$q = (string)$address . ', ' . $district;
+	public function getCoordinates(
+		string $countryCode,
+		string $city,
+		StreetAddress $address,
+		?string $district
+	): ?Coordinates {
+		$q = (string)$address;
+		if ( $district ) {
+			$q .= ', ' . $district;
+		}
 		$url = '/search?' . http_build_query( [
-			'countrycodes' => 'de',
-			'city' => 'Berlin',
+			'countrycodes' => $countryCode,
+			'city' => $city,
 			'q' => $q,
 			'format' => 'json',
 		] );
+
 		$response = $this->httpClient->request( self::METHOD_GET, $url );
 
 		if ( $response->getStatusCode() !== self::STATUS_OK ) {

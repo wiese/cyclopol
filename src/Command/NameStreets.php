@@ -67,11 +67,21 @@ class NameStreets extends Command {
 			$streetNames = $streetNameAnalyser->getStreetNames( $article->getText() );
 			if ( count( $streetNames ) ) {
 				foreach ( $streetNames as $streetName ) {
-					// TODO ignore district ("categories") if "berlinweit" or "bezirksübergreifend")
-
+					$districtBlacklist = [
+						'berlinweit',
+						'bezirksübergreifend'
+					];
 					$districts = $article->getDistricts();
-					$output->writeln( "\t" . $streetName . ' - ' . $districts );
-					$coordinates = $geoCoder->getCoordinates( $streetName, $districts );
+					if ( in_array( $districts, $districtBlacklist ) ) {
+						$districts = null;
+					}
+					$output->writeln( "\t" . $streetName . ' - ' . ( $districts ?? '<datahole>???</datahole>' ) );
+					$coordinates = $geoCoder->getCoordinates(
+						'de',
+						'Berlin',
+						$streetName,
+						$districts
+					);
 
 					// TODO ignore coordinates way outside berlin (maybe even in the geoCoder), e.g.
 					// Stettiner Straße - Mitte
