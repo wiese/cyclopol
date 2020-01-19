@@ -3,11 +3,11 @@ declare( strict_types = 1 );
 
 namespace Cyclopol\GeoCoding;
 
+use Cyclopol\DataModel\Address;
 use Cyclopol\DataModel\Coordinates;
-use Cyclopol\DataModel\StreetAddress;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
-class StreetAddressGeoCoder {
+class AddressGeoCoder {
 	private const METHOD_GET = 'GET';
 	private const STATUS_OK = 200;
 	private HttpClientInterface $httpClient;
@@ -17,19 +17,16 @@ class StreetAddressGeoCoder {
 	}
 
 	public function getCoordinates(
-		string $countryCode,
-		string $city,
-		StreetAddress $address,
-		?string $district
+		Address $address
 	): ?Coordinates {
 		$q = (string)$address;
-		if ( $district ) {
-			$q .= ', ' . $district;
+		if ( $address->getDistrict() ) {
+			$q .= ', ' . $address->getDistrict();
 		}
-		$q .= ', ' . $city;
+		$q .= ', ' . $address->getCity();
 		$url = '/search?' . http_build_query( [
-			'countrycodes' => $countryCode,
-			'city' => $city,
+			'countrycodes' => $address->getCountry(),
+			'city' => $address->getCity(),
 			'q' => $q,
 			'format' => 'json',
 		] );

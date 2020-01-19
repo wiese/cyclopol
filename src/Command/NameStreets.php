@@ -4,7 +4,8 @@ declare( strict_types = 1 );
 namespace Cyclopol\Command;
 
 use Cyclopol\DataModel\Article;
-use Cyclopol\GeoCoding\StreetAddressGeoCoder;
+use Cyclopol\DataModel\ArticleAddress;
+use Cyclopol\GeoCoding\AddressGeoCoder;
 use Cyclopol\TextAnalysis\StreetNameAnalyser;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Console\Command\Command;
@@ -26,47 +27,26 @@ class NameStreets extends Command {
 
 	protected function configure() {
 		$this
-			->setDescription( 'Shows street names for the latest articles.' )
-			->setHelp( 'Street names, district.' )
-			->addOption(
-				'throttling',
-				null,
-				InputOption::VALUE_OPTIONAL,
-				'By how many microseconds to throttle consecutive HTTP requests',
-				200000,
-			)
-			->addOption(
-				'user-agent',
-				null,
-				InputOption::VALUE_OPTIONAL,
-				'HTTP user agent string to use when downloading',
-				getenv( 'CYCLOPOL_DOWNLOAD_USER_AGENT' ),
-			);
+			->setDescription( 'Shows street names for the latest articles.' );
 	}
 
 	protected function execute( InputInterface $input, OutputInterface $output ) {
 		$streetNameAnalyser = new StreetNameAnalyser();
-
-		$geoCoder = new StreetAddressGeoCoder(
-			HttpClient::create( [
-				'base_uri' => 'https://nominatim.openstreetmap.org',
-				'headers' => [
-					'User-Agent' => $input->getOption( 'user-agent' ),
-				],
-			] )
-		);
 
 		$articleRepo = $this->entityManager->getRepository( Article::class );
 
 		$outputStyle = new OutputFormatterStyle( 'red', 'yellow', [ 'bold' ] );
 		$output->getFormatter()->setStyle( 'datahole', $outputStyle );
 
-		foreach ( $articleRepo->findAll() as $article ) {
+		// TODO this hits articles w/o a street name time and again...
+		$streetNameAnalyserVersion = StreetNameAnalyser::VERSION;
+		$i = 0;
+		foreach ( $articleRepo->findAllWithoutAddress( $streetNameAnalyserVersion ) as $article ) {
 			$output->writeln( $article->getLink() );
 
 			$streetNames = $streetNameAnalyser->getStreetNames( $article->getText() );
 			if ( count( $streetNames ) ) {
-				foreach ( $streetNames as $streetName ) {
+				foreach ( $streetNames as $streetAddress ) {
 					$districtBlacklist = [
 						'berlinweit',
 						'bezirksübergreifend'
@@ -75,36 +55,33 @@ class NameStreets extends Command {
 					if ( in_array( $districts, $districtBlacklist ) ) {
 						$districts = null;
 					}
-					$output->writeln( "\t" . $streetName . ' - ' . ( $districts ?? '<datahole>???</datahole>' ) );
-					$coordinates = $geoCoder->getCoordinates(
+					$output->writeln( "\t" . $streetAddress . ' - ' . ( $districts ?? '<datahole>???</datahole>' ) );
+
+					$address = new ArticleAddress(
+						$article,
+						$streetNameAnalyserVersion,
 						'de',
 						'Berlin',
-						$streetName,
-						$districts
+						$districts,
+						$streetAddress->getStreet(),
+						$streetAddress->getNumber(),
 					);
 
-					// TODO ignore coordinates way outside berlin (maybe even in the geoCoder), e.g.
-					// Stettiner Straße - Mitte
-					// = Stettiner Straße, Mitte, Dülmen, Kreis Coesfeld, Regierungsbezirk Münster,
-					// Nordrhein-Westfalen, 48249, Deutschland
-
-					if ( $coordinates ) {
-						$output->writeln( "\t" . $coordinates );
-					} else {
-						$output->writeln( "\t<datahole>???</datahole>" );
-					}
-
-					$this->throttle( $input );
+					$this->entityManager->persist( $address );
+					$i++;
 				}
 			} else {
 				$output->writeln( "\t" . '<datahole>???</datahole>' );
 			}
 		}
 
-		return 0;
-	}
+		if ( $i > 0 ) {
+			$this->entityManager->flush();
+			$output->writeln( "<info>Persisted $i changes to DB.</info>" );
+		} else {
+		   $output->writeln( '<info>Nothing to do, DB is up to date.</info>' );
+		}
 
-	private function throttle( InputInterface $input ) {
-		usleep( $input->getOption( 'throttling' ) );
+		return 0;
 	}
 }

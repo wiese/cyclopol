@@ -19,6 +19,14 @@ class StreetAddress {
 		return trim( $this->street . ' ' . $this->number );
 	}
 
+	public function getStreet() {
+		return $this->street;
+	}
+
+	public function getNumber() {
+		return $this->number;
+	}
+
 	public function hasNumber(): bool {
 		return $this->number !== null;
 	}

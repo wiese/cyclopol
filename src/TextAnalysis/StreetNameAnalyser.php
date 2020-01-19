@@ -7,6 +7,7 @@ use Cyclopol\DataModel\StreetAddress;
 
 class StreetNameAnalyser {
 
+	public const VERSION = 1;
 	/**
 	 * IDEAS
 	 * * find location by mentioned "(U/S-)Bahnhof"

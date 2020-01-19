@@ -16,7 +16,7 @@ use Doctrine\ORM\Mapping as ORM;
  *     )
  *   }
  * )
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="Cyclopol\DataAccess\ArticleRepository")
  */
 class Article {
 
@@ -79,6 +79,11 @@ class Article {
 	 * @ORM\Column(type="datetime")
 	 */
 	private DateTimeInterface $createdAt;
+
+	/**
+	 * @ORM\OneToMany(targetEntity="Cyclopol\DataModel\ArticleAddress", mappedBy="article")
+	 */
+	private $addresses;
 
 	public function __construct(
 		ArticleSource $articleSource,
