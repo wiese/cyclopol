@@ -26,6 +26,7 @@ class StreetAddressGeoCoder {
 		if ( $district ) {
 			$q .= ', ' . $district;
 		}
+		$q .= ', ' . $city;
 		$url = '/search?' . http_build_query( [
 			'countrycodes' => $countryCode,
 			'city' => $city,
