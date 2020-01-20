@@ -8,6 +8,7 @@ services:
     working_dir: /app
     environment:
       - CYCLOPOL_BASE_URI
+      - CYCLOPOL_GEOCODER_BASE_URI
       - CYCLOPOL_DOWNLOAD_USER_AGENT
       - MYSQL_HOST=db
       - MYSQL_USER

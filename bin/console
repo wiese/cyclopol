@@ -8,11 +8,13 @@ use Symfony\Component\Console\Application;
 use Cyclopol\Command\DownloadSources;
 use Cyclopol\Command\ArticlesFromSources;
 use Cyclopol\Command\NameStreets;
+use Cyclopol\Command\GeocodeAddresses;
 
 $application = new Application();
 
 $application->add( new DownloadSources( $entityManager ) );
 $application->add( new ArticlesFromSources( $entityManager ) );
 $application->add( new NameStreets( $entityManager ) );
+$application->add( new GeocodeAddresses( $entityManager ) );
 
 $application->run();

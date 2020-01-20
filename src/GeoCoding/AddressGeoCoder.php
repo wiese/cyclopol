@@ -4,7 +4,7 @@ declare( strict_types = 1 );
 namespace Cyclopol\GeoCoding;
 
 use Cyclopol\DataModel\Address;
-use Cyclopol\DataModel\Coordinates;
+use Cyclopol\DataModel\Coordinate;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class AddressGeoCoder {
@@ -18,7 +18,7 @@ class AddressGeoCoder {
 
 	public function getCoordinates(
 		Address $address
-	): ?Coordinates {
+	): ?Coordinate {
 		$q = (string)$address;
 		if ( $address->getDistrict() ) {
 			$q .= ', ' . $address->getDistrict();
@@ -56,7 +56,7 @@ class AddressGeoCoder {
 			return null;
 		}
 
-		return new Coordinates(
+		return new Coordinate(
 			$hit->display_name,
 			(float)$hit->lat,
 			(float)$hit->lon

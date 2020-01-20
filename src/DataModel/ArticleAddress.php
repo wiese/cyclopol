@@ -43,6 +43,11 @@ class ArticleAddress implements Address {
 	/** @ORM\Column(type="string", nullable=true, length=255) */
 	private ?string $number;
 
+	/**
+	 * @ORM\OneToOne(targetEntity="Cyclopol\DataModel\Coordinate", cascade={"persist"})
+	 */
+	private ?Coordinate $coordinate;
+
 	public function __construct(
 		Article $article,
 		int $streetNameAnalyserVersion,
@@ -63,6 +68,10 @@ class ArticleAddress implements Address {
 		$this->number = $number;
 	}
 
+	public function getId(): ?int {
+		return $this->id;
+	}
+
 	public function __toString(): string {
 		return trim( $this->street . ' ' . $this->number );
 	}
@@ -81,5 +90,9 @@ class ArticleAddress implements Address {
 
 	public function hasNumber(): bool {
 		return $this->number !== null;
+	}
+
+	public function setCoordinate( Coordinate $coordinate ) {
+		$this->coordinate = $coordinate;
 	}
 }
