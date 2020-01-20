@@ -35,8 +35,11 @@ class StreetNameAnalyserTest extends TestCase {
 
 		yield [ 'Käufer' ];
 
-		yield [ 'Einmündung Straße der Gerechten' ];
 		yield [ 'Ecke Straße der Gerechten' ];
+		yield [ 'Einmündung Straße der Gerechten' ];
+		yield [ 'Richtung Straße der Gerechten' ];
+		yield [ 'Bereich Straße der Gerechten' ];
+		yield [ 'Richtung Platz des Friedens' ];
 	}
 
 	public function getFineSamples() {

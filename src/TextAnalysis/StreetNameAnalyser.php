@@ -7,7 +7,7 @@ use Cyclopol\DataModel\StreetAddress;
 
 class StreetNameAnalyser {
 
-	public const VERSION = 1;
+	public const VERSION = 2;
 	/**
 	 * IDEAS
 	 * * find location by mentioned "(U/S-)Bahnhof"
@@ -37,6 +37,8 @@ class StreetNameAnalyser {
 	];
 
 	private const STREET_BLACKLIST = [
+		'einbahnstraße',
+
 		'gehweg',
 		'radweg',
 		'fußweg',
@@ -50,9 +52,13 @@ class StreetNameAnalyser {
 		'rettungsgasse',
 
 		'schlagring',
+		'carsharing',
 
 		'kreuzberg', // vs ~berg
+		'friedrichshain-kreuzberg',
+		'tempelhof-schöneberg',
 		'schöneberg', // vs ~berg
+		'lichtenberg',
 
 		'bahnbrücke',
 		's-bahnbrücke',
@@ -61,6 +67,9 @@ class StreetNameAnalyser {
 
 		'ecke straße', // matching the wrong part
 		'einmündung straße', // matching the wrong part
+		'richtung straße',
+		'bereich straße',
+		'richtung platz',
 	];
 
 	public function getStreetNames( string $text ): array {
