@@ -30,6 +30,7 @@ class CoordinateRepository extends EntityRepository {
 					'( addr2.number = addr1.number OR ( addr2.number IS NULL AND addr1.number IS NULL ) ) '
 		   )
 		   ->setParameter( 'addr2Id', $address->getId() )
+		   ->setMaxResults( 1 )
 		   ->getQuery()
 		   ->getOneOrNullResult();
 		if ( $coordinate ) {

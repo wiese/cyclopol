@@ -46,7 +46,7 @@ class ArticleAddress implements Address {
 	/**
 	 * @ORM\OneToOne(targetEntity="Cyclopol\DataModel\Coordinate", cascade={"persist"})
 	 */
-	private ?Coordinate $coordinate;
+	private ?Coordinate $coordinate = null;
 
 	public function __construct(
 		Article $article,

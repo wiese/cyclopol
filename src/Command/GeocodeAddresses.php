@@ -7,6 +7,7 @@ use Cyclopol\DataModel\Article;
 use Cyclopol\DataModel\ArticleAddress;
 use Cyclopol\DataModel\Coordinate;
 use Cyclopol\GeoCoding\AddressGeoCoder;
+use Cyclopol\TextAnalysis\StreetNameAnalyser;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
@@ -62,7 +63,13 @@ class GeocodeAddresses extends Command {
 		);
 
 		$i = 0;
-		foreach ( $addressRepo->findByCoordinate( null ) as $address ) {
+		$addresses = $addressRepo->findBy( [
+			'coordinate' => null,
+			'streetNameAnalyserVersion' => StreetNameAnalyser::VERSION,
+		] );
+		foreach ( $addresses as $address ) {
+			$usedGeocoder = false;
+
 			$output->writeln( (string)$address );
 
 			// TODO ignore coordinates way outside the city (maybe even in the geoCoder), e.g.
@@ -74,6 +81,7 @@ class GeocodeAddresses extends Command {
 			if ( !$coordinates ) {
 				$output->writeln( "\tno luck in older addresses</datahole>" );
 				$coordinates = $geoCoder->getCoordinates( $address );
+				$usedGeocoder = true;
 			} else {
 				$output->writeln( "\t<info>got lucky in older addresses</info>" );
 			}
@@ -89,7 +97,9 @@ class GeocodeAddresses extends Command {
 				$output->writeln( "\t" . $coordinates );
 			}
 
-			$this->throttle( $input );
+			if ( $usedGeocoder ) {
+				$this->throttle( $input );
+			}
 
 			if ( $i > 50 ) {
 				break;
