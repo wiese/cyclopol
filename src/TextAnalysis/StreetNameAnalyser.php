@@ -45,6 +45,7 @@ class StreetNameAnalyser {
 		'umweg',
 
 		'bahnsteig',
+		's-bahnsteig',
 
 		'vorplatz',
 		'parkplatz',
@@ -53,6 +54,7 @@ class StreetNameAnalyser {
 
 		'schlagring',
 		'carsharing',
+		'gering',
 
 		'kreuzberg', // vs ~berg
 		'friedrichshain-kreuzberg',
