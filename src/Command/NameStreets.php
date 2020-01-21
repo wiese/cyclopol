@@ -16,7 +16,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\HttpClient\HttpClient;
 
 class NameStreets extends Command {
-	protected static $defaultName = 'app:name-streets';
+	public static $defaultName = 'app:name-streets';
 
 	private EntityManager $entityManager;
 

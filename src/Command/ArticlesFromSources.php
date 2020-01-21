@@ -13,7 +13,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class ArticlesFromSources extends Command {
-	protected static $defaultName = 'app:articles-from-sources';
+	public static $defaultName = 'app:articles-from-sources';
 
 	private EntityManager $entityManager;
 

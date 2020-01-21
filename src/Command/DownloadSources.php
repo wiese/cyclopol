@@ -16,7 +16,7 @@ use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\HttpKernel\HttpCache\Store;
 
 class DownloadSources extends Command {
-	protected static $defaultName = 'app:download-sources';
+	public static $defaultName = 'app:download-sources';
 
 	private EntityManager $entityManager;
 

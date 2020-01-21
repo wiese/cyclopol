@@ -17,7 +17,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\HttpClient\HttpClient;
 
 class GeocodeAddresses extends Command {
-	protected static $defaultName = 'app:geocode';
+	public static $defaultName = 'app:geocode';
 
 	private EntityManager $entityManager;
 

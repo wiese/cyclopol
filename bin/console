@@ -5,12 +5,15 @@ declare( strict_types = 1 );
 require_once __DIR__ . '/../bootstrap.php';
 
 use Symfony\Component\Console\Application;
+use Cyclopol\Command\Workflow;
 use Cyclopol\Command\DownloadSources;
 use Cyclopol\Command\ArticlesFromSources;
 use Cyclopol\Command\NameStreets;
 use Cyclopol\Command\GeocodeAddresses;
 
 $application = new Application();
+
+$application->add( new Workflow() );
 
 $application->add( new DownloadSources( $entityManager ) );
 $application->add( new ArticlesFromSources( $entityManager ) );
