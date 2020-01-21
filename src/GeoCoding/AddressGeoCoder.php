@@ -39,22 +39,14 @@ class AddressGeoCoder {
 
 		$matches = json_decode( $response->getContent() );
 
-		$hit = null;
-		if ( $address->hasNumber() ) {
-			// hopefully this is a specific building
-			$hit = $matches[ 0 ];
-		} else {
-			foreach ( $matches as $match ) {
-				if ( $match->osm_type === 'way' && $match->class === 'highway' ) {
-					$hit = $match;
-					break;
-				}
-			}
-		}
+		// TODO are there nodes we want to filter?
+		// e.g. based on $match->osm_type or $match->class
 
-		if ( !$hit ) {
+		if ( !array_key_exists( 0, $matches ) ) {
 			return null;
 		}
+
+		$hit = $matches[ 0 ];
 
 		return new Coordinate(
 			$hit->display_name,
