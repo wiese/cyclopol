@@ -66,11 +66,10 @@ class GeocodeAddresses extends Command {
 		$addresses = $addressRepo->findBy( [
 			'coordinate' => null,
 			'streetNameAnalyserVersion' => StreetNameAnalyser::VERSION,
+			'geoCodingAttempts' => 0, // TODO add option to re-attempt others
 		] );
 		foreach ( $addresses as $address ) {
-			$usedGeocoder = false;
-
-			$output->writeln( (string)$address );
+			$output->writeln( (string)$address . ' - ' . ( $address->getDistrict() ?? '???' ) );
 
 			// TODO ignore coordinates way outside the city (maybe even in the geoCoder), e.g.
 			// Stettiner Straße - Mitte
@@ -81,7 +80,8 @@ class GeocodeAddresses extends Command {
 			if ( !$coordinates ) {
 				$output->writeln( "\tno luck in older addresses</datahole>" );
 				$coordinates = $geoCoder->getCoordinates( $address );
-				$usedGeocoder = true;
+				$address->incrementGeoCodingAttempts();
+				$this->throttle( $input ); // TODO decorating HttpClient
 			} else {
 				$output->writeln( "\t<info>got lucky in older addresses</info>" );
 			}
@@ -91,15 +91,10 @@ class GeocodeAddresses extends Command {
 			} else {
 				$output->writeln( "\tadd $coordinates" );
 				$address->setCoordinate( $coordinates );
-				$this->entityManager->persist( $address );
-				$this->entityManager->flush(); // allow cache hits
-
-				$output->writeln( "\t" . $coordinates );
 			}
 
-			if ( $usedGeocoder ) {
-				$this->throttle( $input );
-			}
+			$this->entityManager->persist( $address );
+			$this->entityManager->flush(); // allow cache hits
 
 			if ( $i > 50 ) {
 				break;

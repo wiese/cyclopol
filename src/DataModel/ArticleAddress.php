@@ -48,6 +48,9 @@ class ArticleAddress implements Address {
 	 */
 	private ?Coordinate $coordinate = null;
 
+	/** @ORM\Column(type="integer") */
+	private int $geoCodingAttempts = 0;
+
 	public function __construct(
 		Article $article,
 		int $streetNameAnalyserVersion,
@@ -94,5 +97,9 @@ class ArticleAddress implements Address {
 
 	public function setCoordinate( Coordinate $coordinate ) {
 		$this->coordinate = $coordinate;
+	}
+
+	public function incrementGeoCodingAttempts() {
+		$this->geoCodingAttempts++;
 	}
 }
