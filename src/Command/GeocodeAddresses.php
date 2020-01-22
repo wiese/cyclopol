@@ -43,6 +43,13 @@ class GeocodeAddresses extends Command {
 				InputOption::VALUE_OPTIONAL,
 				'HTTP user agent string to use when downloading',
 				getenv( 'CYCLOPOL_DOWNLOAD_USER_AGENT' ),
+			)
+			->addOption(
+				'max-items',
+				null,
+				InputOption::VALUE_OPTIONAL,
+				'Maximum number of items to process at a time. Set to 0 for no limit',
+				50,
 			);
 	}
 
@@ -61,6 +68,8 @@ class GeocodeAddresses extends Command {
 				],
 			] )
 		);
+
+		$maxItems = (int)$input->getOption( 'max-items' );
 
 		$i = 0;
 		$addresses = $addressRepo->findBy( [
@@ -96,7 +105,7 @@ class GeocodeAddresses extends Command {
 			$this->entityManager->persist( $address );
 			$this->entityManager->flush(); // allow cache hits
 
-			if ( $i > 50 ) {
+			if ( $maxItems !== 0 && $i > $maxItems ) {
 				break;
 			}
 			$i++;
