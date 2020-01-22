@@ -2,7 +2,9 @@ version: '3'
 
 services:
   cli:
-    build: './'
+    build:
+      context: ./infrastructure
+      dockerfile: Dockerfile-cli
     volumes:
       - './:/app'
     working_dir: /app
