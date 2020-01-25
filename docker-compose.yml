@@ -25,6 +25,22 @@ services:
       - MYSQL_USER
       - MYSQL_PASSWORD
       - MYSQL_DATABASE
+  ssg:
+    build:
+      context: ./infrastructure
+      dockerfile: Dockerfile-ssg
+      args:
+        UID: 1000
+        GID: 1000
+    volumes:
+      - './ssg:/app'
+    working_dir: /app
+    command: "npm run dev"
+    environment:
+      PORT: "${NUXT_PORT}"
+      HOST: 0.0.0.0
+    ports:
+      - "${NUXT_PORT}:${NUXT_PORT}"
 
 volumes:
   cyclopol-db:

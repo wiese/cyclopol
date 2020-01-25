@@ -1,0 +1,14 @@
+FROM docker.io/node:13.6.0
+
+RUN apt-get update && \
+	apt-get install -y \
+		ca-certificates
+
+ARG UID=1000
+ARG GID=1000
+
+RUN npm install -g npm@6.13.6 @vue/cli@4.1.2
+
+RUN mkdir /app && chown $UID:$GID /app
+
+USER $UID
