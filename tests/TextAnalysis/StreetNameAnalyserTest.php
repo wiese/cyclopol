@@ -10,30 +10,44 @@ use PHPUnit\Framework\TestCase;
 class StreetNameAnalyserTest extends TestCase {
 
 	public function getNoMatchSamples() {
+		// not matching
 		yield [ '' ];
 		yield [ 'lorem ipsum' ];
 
+		// blacklisted
 		yield [ 'Ein Gehweg bleibt unerkannt' ];
 		yield [ 'Radweg' ];
 		yield [ 'Fußweg' ];
 		yield [ 'Umweg' ];
+		yield [ 'Heimweg' ];
+		yield [ 'Fahrweg' ];
+		yield [ 'Fußgängerüberweg' ];
 
 		yield [ 'Bahnsteig' ];
+		yield [ 'S-Bahnsteig' ];
 
+		yield [ 'Spielplatz' ];
 		yield [ 'Vorplatz' ];
 		yield [ 'Parkplatz' ];
 
 		yield [ 'Rettungsgasse' ];
+		yield [ 'Sackgasse' ];
 
 		yield [ 'Schlagring' ];
+		yield [ 'carsharing' ];
+		yield [ 'gering' ];
 
 		yield [ 'Kreuzberg' ];
+		yield [ 'Friedrichshain-Kreuzberg' ];
+		yield [ 'Tempelhof-Schöneberg' ];
 		yield [ 'Schöneberg' ];
+		yield [ 'Lichtenberg' ];
 
 		yield [ 'Bahnbrücke' ];
 		yield [ 'S-Bahnbrücke' ];
 
 		yield [ 'Käufer' ];
+		yield [ 'Kokainkäufer' ];
 
 		yield [ 'Ecke Straße der Gerechten' ];
 		yield [ 'Einmündung Straße der Gerechten' ];
@@ -108,6 +122,14 @@ class StreetNameAnalyserTest extends TestCase {
 		yield [
 			[],
 			'...gegen 8.45 Uhr am S-Bahnhof Wuhletal, als die Täter...',
+		];
+		yield [
+			[ new StreetAddress( '-Hoffmann-Promenade' ) ],
+			'... bis zur E.T.A.-Hoffmann-Promenade unterwegs',
+		];
+		yield [
+			[ new StreetAddress( 'Fahrzeug weg' ) ],
+			'plötzlich fuhr das Fahrzeug weg und die Kollegen standen ratlos da',
 		];
 	}
 

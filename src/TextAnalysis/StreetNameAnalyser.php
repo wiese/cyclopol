@@ -43,13 +43,18 @@ class StreetNameAnalyser {
 		'radweg',
 		'fußweg',
 		'umweg',
+		'heimweg',
+		'fahrweg',
+		'fußgängerüberweg',
 
 		'bahnsteig',
 		's-bahnsteig',
 
+		'spielplatz',
 		'vorplatz',
 		'parkplatz',
 
+		'sackgasse',
 		'rettungsgasse',
 
 		'schlagring',
@@ -66,6 +71,7 @@ class StreetNameAnalyser {
 		's-bahnbrücke',
 
 		'käufer', // vs ~ufer
+		'kokainkäufer', // FIXME implement prefixes or it is getting ridiculous
 
 		'ecke straße', // matching the wrong part
 		'einmündung straße', // matching the wrong part
