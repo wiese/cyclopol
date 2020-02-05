@@ -36,7 +36,9 @@ class ArticleCrawler {
 	 * TODO these seem to start from 0 every year
 	 */
 	public function getId(): ?int {
-		return array_shift( $this->getReportIds() );
+		$ids = $this->getReportIds();
+		$id = array_shift( $ids );
+		return $id;
 	}
 
 	/**
