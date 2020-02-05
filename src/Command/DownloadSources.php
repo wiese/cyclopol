@@ -6,7 +6,7 @@ namespace Cyclopol\Command;
 use Cyclopol\DataAccess\HttpArticleSourceRepo;
 use Cyclopol\DataAccess\HttpListingRepo;
 use Cyclopol\DataModel\ArticleSource;
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -18,9 +18,9 @@ use Symfony\Component\HttpKernel\HttpCache\Store;
 class DownloadSources extends Command {
 	public static $defaultName = 'app:download-sources';
 
-	private EntityManager $entityManager;
+	private EntityManagerInterface $entityManager;
 
-	public function __construct( EntityManager $entityManager ) {
+	public function __construct( EntityManagerInterface $entityManager ) {
 		$this->entityManager = $entityManager;
 		parent::__construct();
 	}

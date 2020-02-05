@@ -7,7 +7,7 @@ use Cyclopol\DataModel\Article;
 use Cyclopol\DataModel\ArticleAddress;
 use Cyclopol\GeoCoding\AddressGeoCoder;
 use Cyclopol\TextAnalysis\StreetNameAnalyser;
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 use Symfony\Component\Console\Input\InputInterface;
@@ -18,9 +18,9 @@ use Symfony\Component\HttpClient\HttpClient;
 class NameStreets extends Command {
 	public static $defaultName = 'app:name-streets';
 
-	private EntityManager $entityManager;
+	private EntityManagerInterface $entityManager;
 
-	public function __construct( EntityManager $entityManager ) {
+	public function __construct( EntityManagerInterface $entityManager ) {
 		$this->entityManager = $entityManager;
 		parent::__construct();
 	}
@@ -43,6 +43,7 @@ class NameStreets extends Command {
 		$i = 0;
 		foreach ( $articleRepo->findAllWithoutAddress( $streetNameAnalyserVersion ) as $article ) {
 			$output->writeln( $article->getLink() );
+			$output->writeln( $article->getText() );
 
 			$streetNames = $streetNameAnalyser->getStreetNames( $article->getText() );
 			if ( count( $streetNames ) ) {

@@ -8,7 +8,7 @@ use Cyclopol\DataModel\ArticleAddress;
 use Cyclopol\DataModel\Coordinate;
 use Cyclopol\GeoCoding\AddressGeoCoder;
 use Cyclopol\TextAnalysis\StreetNameAnalyser;
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 use Symfony\Component\Console\Input\InputInterface;
@@ -19,9 +19,9 @@ use Symfony\Component\HttpClient\HttpClient;
 class GeocodeAddresses extends Command {
 	public static $defaultName = 'app:geocode';
 
-	private EntityManager $entityManager;
+	private EntityManagerInterface $entityManager;
 
-	public function __construct( EntityManager $entityManager ) {
+	public function __construct( EntityManagerInterface $entityManager ) {
 		$this->entityManager = $entityManager;
 		parent::__construct();
 	}

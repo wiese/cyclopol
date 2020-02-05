@@ -6,7 +6,7 @@ namespace Cyclopol\Command;
 use Cyclopol\Crawler\ArticleCrawler;
 use Cyclopol\DataModel\Article;
 use Cyclopol\DataModel\ArticleSource;
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 use Symfony\Component\Console\Input\InputInterface;
@@ -15,9 +15,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 class ArticlesFromSources extends Command {
 	public static $defaultName = 'app:articles-from-sources';
 
-	private EntityManager $entityManager;
+	private EntityManagerInterface $entityManager;
 
-	public function __construct( EntityManager $entityManager ) {
+	public function __construct( EntityManagerInterface $entityManager ) {
 		$this->entityManager = $entityManager;
 		parent::__construct();
 	}
