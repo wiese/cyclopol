@@ -1,0 +1,9 @@
+ArticleList:
+  type: object
+  config:
+    description: "A query to return list of Articles"
+    fields:
+      articles:
+        type: "[Article]"
+        description: "Article details"
+

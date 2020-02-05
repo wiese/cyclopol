@@ -1,0 +1,21 @@
+Article:
+  type: object
+  config:
+    description: "Public polber article"
+    fields:
+      id:
+        type: "Int!"
+        description: "The unique ID of the article."
+      link:
+        type: "String"
+        description: "Link to the article"
+      title:
+        type: "String"
+        description: "Title of the article"
+      text:
+        type: "String"
+        description: "Text of the article"
+      districts:
+        type: "String"
+        description: "District(s) of the article"
+

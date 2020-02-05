@@ -1,0 +1,8 @@
+FROM docker.io/php:7.4-fpm
+
+RUN docker-php-ext-install pdo pdo_mysql
+
+RUN useradd -ms /bin/bash symfony
+
+USER symfony
+

@@ -1,0 +1,4 @@
+overblog_graphiql_endpoint:
+    resource: "@OverblogGraphiQLBundle/Resources/config/routing.xml"
+
+

@@ -1,0 +1,20 @@
+Query:
+  type: object
+  config:
+    description: "Articles ORM repository"
+    fields:
+      article:
+        type: "Article"
+        args:
+          id:
+            description: "Resolves using the article id."
+            type: "Int"
+        resolve: "@=resolver('Article', [args])"
+      article_list:
+        type: "ArticleList"
+        args:
+          limit:
+            description: "limit"
+            type: "Int"
+        resolve: "@=resolver('ArticleList', [args])"
+

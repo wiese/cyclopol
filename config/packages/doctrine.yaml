@@ -1,0 +1,17 @@
+doctrine:
+    dbal:
+        charset: UTF8
+        url: '%env(resolve:DATABASE_URL)%'
+
+    orm:
+        auto_generate_proxy_classes: true
+        # this was the default but not compatible with the data already in the db
+        #naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
+        auto_mapping: true
+        mappings:
+            App:
+                is_bundle: false
+                type: annotation
+                dir: '%kernel.project_dir%/src/DataModel'
+                prefix: 'Cyclopol\DataModel'
+                alias: App
