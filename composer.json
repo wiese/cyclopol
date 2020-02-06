@@ -13,7 +13,8 @@
         "overblog/graphql-bundle": "^0.13.1",
         "symfony/dotenv": "^5.0",
         "symfony/flex": "^1.6",
-        "symfony/yaml": "^5.0"
+        "symfony/yaml": "^5.0",
+        "nelmio/cors-bundle": "^2.0"
     },
     "replace": {
         "paragonie/random_compat": "2.*",
