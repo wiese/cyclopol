@@ -46,7 +46,8 @@ module.exports = {
    */
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
-    '@nuxtjs/axios'
+    '@nuxtjs/axios',
+    '@nuxtjs/apollo'
   ],
   /*
    ** Axios module configuration
@@ -82,5 +83,13 @@ module.exports = {
      ** You can extend webpack config here
      */
     extend(config, ctx) {}
-  }
+  },
+  apollo: {
+    clientConfigs: {
+      default: {
+        httpEndpoint: process.env.GRAPHQL_BACKEND_URL,
+        browserHttpEndpoint: process.env.GRAPHQL_BROWSER_BACKEND_URL
+      }
+    }
+  },
 }

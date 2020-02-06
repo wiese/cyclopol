@@ -52,6 +52,8 @@ services:
     environment:
       PORT: "${NUXT_PORT}"
       HOST: 0.0.0.0
+      GRAPHQL_BACKEND_URL: "http://proxy/graphql/"
+      GRAPHQL_BROWSER_BACKEND_URL: "http://localhost:${PROXY_PORT}/graphql/"
     ports:
       - "${NUXT_PORT}:${NUXT_PORT}"
     depends_on:

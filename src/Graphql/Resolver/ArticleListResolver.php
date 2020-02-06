@@ -20,7 +20,7 @@ class ArticleListResolver implements ResolverInterface, AliasedInterface {
 	public function resolve( Argument $args ) {
 		$articles = $this->em->getRepository( Article::class )->findBy(
 			[],
-			[ 'id' => 'desc' ],
+			[ 'date' => 'desc' ],
 			$args[ 'limit' ],
 			0
 		);
