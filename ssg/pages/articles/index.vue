@@ -13,6 +13,9 @@
           <ArticleTeaser :article="article" />
         </li>
       </ul>
+      <div style="width: 800px; height: 800px;">
+        <ArticleMap :articles="article_list.articles" />
+      </div>
     </div>
   </section>
 </template>
@@ -20,10 +23,12 @@
 <script>
 import gql from 'graphql-tag'
 import ArticleTeaser from '@/components/ArticleTeaser.vue'
+import ArticleMap from '@/components/ArticleMap.vue'
 
 export default {
   components: {
-    ArticleTeaser
+    ArticleTeaser,
+    ArticleMap
   },
   apollo: {
     article_list: gql`
@@ -34,6 +39,15 @@ export default {
             title
             text
             districts
+            addresses {
+              street
+              number
+              coordinate {
+                name
+                lat
+                lon
+              }
+            }
           }
         }
       }

@@ -44,6 +44,10 @@ class Coordinate {
 		return $this->name;
 	}
 
+	public function getName(): string {
+		return $this->name;
+	}
+
 	public function getLat(): float {
 		return $this->lat;
 	}

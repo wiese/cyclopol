@@ -17,6 +17,11 @@ class ArticleListResolver implements ResolverInterface, AliasedInterface {
 		$this->em = $em;
 	}
 
+	/**
+	 * FIXME
+	 * * only find addresses resulting from the latest Cyclopol\TextAnalysis\StreetNameAnalyser
+	 * * eagerly load relationships to prevent multiplying numbers of DB queries
+	 */
 	public function resolve( Argument $args ) {
 		$articles = $this->em->getRepository( Article::class )->findBy(
 			[],

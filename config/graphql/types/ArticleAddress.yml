@@ -1,0 +1,14 @@
+ArticleAddress:
+  type: object
+  config:
+    description: "Address mentioned in a Cyclopol article"
+    fields:
+      street:
+        type: "String"
+        description: "Street name"
+      number:
+        type: "String"
+        description: "House number, if known"
+      coordinate:
+        type: "Coordinate"
+        description: "Coordinate of this address, if known"

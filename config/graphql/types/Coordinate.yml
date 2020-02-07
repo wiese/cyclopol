@@ -1,0 +1,14 @@
+Coordinate:
+  type: object
+  config:
+    description: "Coordinate of a Cyclopol address mentioned in an article"
+    fields:
+      name:
+        type: "String"
+        description: "Official name of the place (per OSM)"
+      lat:
+        type: "Float"
+        description: "latitude"
+      lon:
+        type: "Float"
+        description: "longitude"

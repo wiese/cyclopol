@@ -137,4 +137,8 @@ class Article {
 	public function getDistricts(): string {
 		return $this->districts;
 	}
+
+	public function getAddresses() {
+		return $this->addresses;
+	}
 }

@@ -91,8 +91,20 @@ class ArticleAddress implements Address {
 		return $this->district;
 	}
 
+	public function getStreet(): string {
+		return $this->street;
+	}
+
+	public function getNumber(): ?string {
+		return $this->number;
+	}
+
 	public function hasNumber(): bool {
 		return $this->number !== null;
+	}
+
+	public function getCoordinate(): ?Coordinate {
+		return $this->coordinate;
 	}
 
 	public function setCoordinate( Coordinate $coordinate ) {

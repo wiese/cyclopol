@@ -19,7 +19,6 @@ class ArticleResolver implements ResolverInterface, AliasedInterface {
 
 	public function resolve( Argument $args ) {
 		$article = $this->em->getRepository( Article::class )->find( $args[ 'id' ] );
-		// $apartment = $this->em->getRepository('App:Apartment')->find($args['id']);
 		return $article;
 	}
 

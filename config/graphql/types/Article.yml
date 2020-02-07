@@ -18,4 +18,6 @@ Article:
       districts:
         type: "String"
         description: "District(s) of the article"
-
+      addresses:
+        type: "[ArticleAddress]"
+        description: "Article address details (aka street names)"
