@@ -62,6 +62,7 @@ export default {
             articles {
               link
               title
+              date
               text
               districts
               addresses {

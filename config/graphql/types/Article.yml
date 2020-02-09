@@ -9,6 +9,9 @@ Article:
       link:
         type: "String"
         description: "Link to the article"
+      date:
+        type: "DateTime"
+        description: "Publish date of the article"
       title:
         type: "String"
         description: "Title of the article"

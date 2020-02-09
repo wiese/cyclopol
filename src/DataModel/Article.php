@@ -126,6 +126,10 @@ class Article {
 		return $this->reportId;
 	}
 
+	public function getDate(): DateTimeInterface {
+		return $this->date;
+	}
+
 	public function getTitle(): string {
 		return $this->title;
 	}

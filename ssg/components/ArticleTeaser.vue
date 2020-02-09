@@ -2,7 +2,7 @@
   <div>
     <a :href="article.link">{{ article.title }}</a>
     <p>
-      Ereignisort: <strong>{{ article.districts }}</strong>
+      {{ formattedDate }}, Ereignisort: <strong>{{ article.districts }}</strong>
     </p>
     <p class="text">{{ article.text }}</p>
     <!-- <nuxt-link :to="'/users/' + user.id">{{ user.name }}</nuxt-link> -->
@@ -10,11 +10,19 @@
 </template>
 
 <script>
+import dateFormat from 'dateformat'
+
 export default {
   props: {
     article: {
       type: Object,
       required: true
+    }
+  },
+  computed: {
+    // eslint-disable-next-line object-shorthand
+    formattedDate: function() {
+      return dateFormat(new Date(this.article.date), 'dd.mm.yyyy HH:MM')
     }
   }
 }
