@@ -4,7 +4,9 @@ declare( strict_types = 1 );
 namespace Cyclopol\Graphql\Resolver;
 
 use Cyclopol\DataModel\Article;
+use Cyclopol\TextAnalysis\StreetNameAnalyser;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Query\Expr;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
@@ -17,19 +19,21 @@ class ArticleListResolver implements ResolverInterface, AliasedInterface {
 		$this->em = $em;
 	}
 
-	/**
-	 * FIXME
-	 * * only find addresses resulting from the latest Cyclopol\TextAnalysis\StreetNameAnalyser
-	 * * eagerly load relationships to prevent multiplying numbers of DB queries
-	 */
 	public function resolve( Argument $args ) {
-		$articles = $this->em->getRepository( Article::class )->findBy(
-			[],
-			[ 'date' => 'desc' ],
-			$args[ 'limit' ],
-			0
-		);
-		return [ 'articles' => $articles ];
+		$repo = $this->em->getRepository( Article::class );
+		$qb = $repo
+			->createQueryBuilder( 'a' )
+			->select( 'a.id' );
+		if ( ( $args[ 'search' ] ) !== null && $args[ 'search' ] !== '' ) {
+			$qb->andWhere( $qb->expr()->like( 'a.text', ':search' ) );
+			$qb->setParameter( 'search', '%' . addcslashes( $args[ 'search' ], '%_' ) . '%' ); // Doctrine way to do this?
+		}
+		$qb->orderBy( 'a.date', 'DESC' )
+			->setMaxResults( $args[ 'limit' ] );
+
+		$ids = array_column( $qb->getQuery()->getResult(), 'id' );
+
+		return [ 'articles' => $repo->findByIdsInclRelations( $ids ) ];
 	}
 
 	public static function getAliases(): array {

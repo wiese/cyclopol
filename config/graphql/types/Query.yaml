@@ -14,7 +14,10 @@ Query:
         type: "ArticleList"
         args:
           limit:
-            description: "limit"
+            description: "Maximum number of articles to return"
             type: "Int"
+          search:
+            description: "A search query to perform on the articles"
+            type: "String"
         resolve: "@=resolver('ArticleList', [args])"
 

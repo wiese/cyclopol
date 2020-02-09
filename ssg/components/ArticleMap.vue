@@ -1,27 +1,32 @@
 <template>
-  <div style="height: 100%; width: 100%; overflow: hidden;">
-    <div class="info" style="height: 15%;">
-      <span>Center: {{ center }}</span>
-      <span>Zoom: {{ zoom }}</span>
-      <span>Bounds: {{ bounds }}</span>
-    </div>
+  <div style="height: 100%; width: 100%;">
     <client-only>
+      <div v-if="debug" class="info">
+        <span>Center: {{ center }}</span>
+        <span>Zoom: {{ zoom }}</span>
+        <span>Bounds: {{ bounds }}</span>
+      </div>
       <l-map
         :center="center"
         :zoom="zoom"
         @update:bounds="boundsUpdated"
         @update:center="centerUpdated"
         @update:zoom="zoomUpdated"
-        style="height: 85%; width: 100%;"
+        style="height: 100%; width: 100%;"
       >
         <l-tile-layer :url="url"></l-tile-layer>
-        <l-marker
-          v-for="(marker, index) in markers"
-          :key="index"
-          :lat-lng="marker.position"
-        >
-          <l-tooltip>{{ marker.text }}</l-tooltip>
-        </l-marker>
+        <span v-for="(marker, index) in markers" :key="index">
+          <l-marker v-if="marker.type === 'point'" :lat-lng="marker.latlng">
+            <l-tooltip>{{ marker.article.text }}</l-tooltip>
+          </l-marker>
+          <l-polygon
+            v-else
+            :lat-lngs="marker.latlngs"
+            :color="highlight === marker.article ? 'red' : 'blue'"
+          >
+            <l-tooltip>{{ marker.article.text }}</l-tooltip>
+          </l-polygon>
+        </span>
       </l-map>
     </client-only>
   </div>
@@ -30,9 +35,17 @@
 <script>
 export default {
   props: {
+    debug: {
+      type: Boolean,
+      default: false
+    },
     articles: {
       type: Array,
       required: true
+    },
+    highlight: {
+      type: Object,
+      default: () => ({})
     }
   },
   data() {
@@ -54,15 +67,26 @@ export default {
         if (!article.addresses) {
           return
         }
+        const latlngs = []
         article.addresses.forEach((address) => {
           if (!address.coordinate) {
             return
           }
-          markers.push({
-            position: [address.coordinate.lat, address.coordinate.lon],
-            text: article.title
-          })
+          latlngs.push([address.coordinate.lat, address.coordinate.lon])
         })
+        if (latlngs.length === 1) {
+          markers.push({
+            type: 'point',
+            latlng: latlngs[0],
+            article
+          })
+        } else if (latlngs.length > 1) {
+          markers.push({
+            type: 'polygon',
+            latlngs,
+            article
+          })
+        }
       })
       return markers
     }
@@ -80,3 +104,14 @@ export default {
   }
 }
 </script>
+
+<style scoped="scoped">
+.info {
+  height: 3em;
+  position: absolute;
+  z-index: 100;
+  top: 0;
+  left: 0;
+  opacity: 0.8;
+}
+</style>

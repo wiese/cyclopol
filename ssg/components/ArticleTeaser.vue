@@ -4,7 +4,7 @@
     <p>
       Ereignisort: <strong>{{ article.districts }}</strong>
     </p>
-    <p>{{ article.text }}</p>
+    <p class="text">{{ article.text }}</p>
     <!-- <nuxt-link :to="'/users/' + user.id">{{ user.name }}</nuxt-link> -->
   </div>
 </template>
@@ -19,3 +19,14 @@ export default {
   }
 }
 </script>
+
+<style scoped="scoped">
+.text {
+  max-height: 8ex;
+  overflow: hidden;
+}
+
+.text:hover {
+  max-height: none;
+}
+</style>
