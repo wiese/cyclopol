@@ -16,15 +16,20 @@
       >
         <l-tile-layer :url="url"></l-tile-layer>
         <span v-for="(marker, index) in markers" :key="index">
-          <l-marker v-if="marker.type === 'point'" :lat-lng="marker.latlng">
-            <l-tooltip>{{ marker.article.text }}</l-tooltip>
-          </l-marker>
+          <l-circle-marker
+            v-if="marker.type === 'point'"
+            :lat-lng="marker.latlng"
+            :color="highlight === marker.article ? 'red' : 'blue'"
+            :radius="10"
+          >
+            <l-tooltip>{{ marker.article.title }}</l-tooltip>
+          </l-circle-marker>
           <l-polygon
             v-else
             :lat-lngs="marker.latlngs"
             :color="highlight === marker.article ? 'red' : 'blue'"
           >
-            <l-tooltip>{{ marker.article.text }}</l-tooltip>
+            <l-tooltip>{{ marker.article.title }}</l-tooltip>
           </l-polygon>
         </span>
       </l-map>
@@ -50,7 +55,7 @@ export default {
   },
   data() {
     return {
-      url: 'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
+      url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
       zoom: 11,
       center: [52.507445, 13.391647],
       bounds: null

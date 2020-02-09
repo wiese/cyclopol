@@ -1,5 +1,11 @@
 import Vue from 'vue'
-import { LMap, LTileLayer, LMarker, LTooltip, LPolygon } from 'vue2-leaflet'
+import {
+  LMap,
+  LTileLayer,
+  LTooltip,
+  LCircleMarker,
+  LPolygon
+} from 'vue2-leaflet'
 import { Icon } from 'leaflet'
 import 'leaflet/dist/leaflet.css'
 
@@ -13,6 +19,6 @@ Icon.Default.mergeOptions({
 
 Vue.component('l-map', LMap)
 Vue.component('l-tile-layer', LTileLayer)
-Vue.component('l-marker', LMarker)
 Vue.component('l-tooltip', LTooltip)
+Vue.component('l-circle-marker', LCircleMarker)
 Vue.component('l-polygon', LPolygon)
