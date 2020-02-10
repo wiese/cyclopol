@@ -1,0 +1,11 @@
+ArticleCount:
+  type: object
+  config:
+    description: "Count of public polber articles"
+    fields:
+      count:
+        type: "Int"
+        description: "The number of articles"
+      date:
+        type: "DateTime"
+        description: "The publish date"

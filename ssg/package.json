@@ -19,6 +19,7 @@
     "express": "^4.16.4",
     "leaflet": "^1.6.0",
     "nuxt": "^2.0.0",
+    "vis-timeline": "^7.1.0",
     "vue2-leaflet": "^2.4.2"
   },
   "devDependencies": {

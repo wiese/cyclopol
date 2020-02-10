@@ -43,4 +43,17 @@ class ArticleRepository extends EntityRepository {
 			->getQuery()
 			->getResult();
 	}
+
+	public function getFulltextSearchQuery( $search ) {
+		$qb = $this
+			->createQueryBuilder( 'a' )
+			->select( 'a.id' );
+		if ( $search !== null && $search !== '' ) {
+			$qb->andWhere( $qb->expr()->like( 'a.text', ':search' ) );
+			$qb->setParameter( 'search', '%' . addcslashes( $search, '%_' ) . '%' ); // Doctrine way to do this?
+		}
+		$qb->orderBy( 'a.date', 'DESC' );
+		return $qb;
+	}
+
 }

@@ -20,4 +20,11 @@ Query:
             description: "A search query to perform on the articles"
             type: "String"
         resolve: "@=resolver('ArticleList', [args])"
+      article_count:
+        args:
+          search:
+            description: "A search query to perform on the articles"
+            type: "String"
+        type: "[ArticleCount]"
+        resolve: "@=resolver('ArticleCount', [args])"
 

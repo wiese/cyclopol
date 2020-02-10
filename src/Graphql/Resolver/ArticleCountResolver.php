@@ -4,14 +4,13 @@ declare( strict_types = 1 );
 namespace Cyclopol\Graphql\Resolver;
 
 use Cyclopol\DataModel\Article;
-use Cyclopol\TextAnalysis\StreetNameAnalyser;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Query\Expr;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
 
-class ArticleListResolver implements ResolverInterface, AliasedInterface {
+class ArticleCountResolver implements ResolverInterface, AliasedInterface {
 
 	private EntityManagerInterface $em;
 
@@ -20,20 +19,26 @@ class ArticleListResolver implements ResolverInterface, AliasedInterface {
 	}
 
 	public function resolve( Argument $args ) {
-		$repo = $this->em->getRepository( Article::class );
-
-		$qb = $repo
+		$counts = $this->em->getRepository( Article::class )
 			->getFulltextSearchQuery( $args[ 'search' ] )
-			->setMaxResults( $args[ 'limit' ] );
+			->addSelect( 'SUBSTRING(a.date, 1, 10) date' )
+			->addSelect( 'COUNT(DISTINCT a.id) totalCount' )
+			->groupBy( 'date' )
+			->orderBy( 'date', 'ASC' )
+			->getQuery()
+			->getResult();
 
-		$ids = array_column( $qb->getQuery()->getResult(), 'id' );
-
-		return [ 'articles' => $repo->findByIdsInclRelations( $ids ) ];
+		return array_map( function ( $set ) {
+			return [
+			 'date' => new DateTime( $set['date'] ),
+			 'count' => $set['totalCount'],
+			];
+		}, $counts );
 	}
 
 	public static function getAliases(): array {
 		return [
-			'resolve' => 'ArticleList',
+			'resolve' => 'ArticleCount',
 		];
 	}
 }

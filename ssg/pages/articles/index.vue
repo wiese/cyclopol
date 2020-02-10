@@ -1,9 +1,6 @@
 <template>
   <section class="container">
     <div>
-      <h1 class="title">
-        Meldungen
-      </h1>
       <h2 class="subtitle">
         Die {{ article_list.articles.length }} neusten Meldungen
       </h2>
@@ -14,6 +11,14 @@
           v-model="limit"
           class="col"
           label="Anzahl (max.)"
+        />
+      </div>
+      <div class="row">
+        <ArticleCountTimeline
+          :search="search"
+          width="100%"
+          height="200px"
+          class="col"
         />
       </div>
       <div class="row">
@@ -42,11 +47,13 @@
 import gql from 'graphql-tag'
 import ArticleTeaser from '@/components/ArticleTeaser.vue'
 import ArticleMap from '@/components/ArticleMap.vue'
+import ArticleCountTimeline from '@/components/ArticleCountTimeline'
 
 export default {
   components: {
     ArticleTeaser,
-    ArticleMap
+    ArticleMap,
+    ArticleCountTimeline
   },
   data: () => ({
     maxItemsDefault: [5, 10, 50, 100],
