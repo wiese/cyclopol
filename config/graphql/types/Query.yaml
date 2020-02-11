@@ -11,7 +11,7 @@ Query:
             type: "Int"
         resolve: "@=resolver('Article', [args])"
       article_list:
-        type: "ArticleList"
+        type: "[Article]"
         args:
           limit:
             description: "Maximum number of articles to return"

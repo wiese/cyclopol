@@ -1,9 +1,7 @@
 <template>
   <section class="container">
     <div>
-      <h2 class="subtitle">
-        Die {{ article_list.articles.length }} neusten Meldungen
-      </h2>
+      <h2 class="subtitle">Die {{ article_list.length }} neusten Meldungen</h2>
       <div class="row">
         <v-text-field v-model="search" label="Suchbegriff" class="col" />
         <v-select
@@ -24,7 +22,7 @@
       <div class="row">
         <ul class="col">
           <li
-            v-for="(article, index) in article_list.articles"
+            v-for="(article, index) in article_list"
             :key="index"
             @mouseover="highlight = article"
             @mouseleave="highlight = {}"
@@ -33,10 +31,7 @@
           </li>
         </ul>
         <div class="col" style="width: 800px; height: 800px;">
-          <ArticleMap
-            :articles="article_list.articles"
-            :highlight="highlight"
-          />
+          <ArticleMap :articles="article_list" :highlight="highlight" />
         </div>
       </div>
     </div>
@@ -66,20 +61,18 @@ export default {
       query: gql`
         query article_list($limit: Int!, $search: String!) {
           article_list(limit: $limit, search: $search) {
-            articles {
-              link
-              title
-              date
-              text
-              districts
-              addresses {
-                street
-                number
-                coordinate {
-                  name
-                  lat
-                  lon
-                }
+            link
+            title
+            date
+            text
+            districts
+            addresses {
+              street
+              number
+              coordinate {
+                name
+                lat
+                lon
               }
             }
           }
