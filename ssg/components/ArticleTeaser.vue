@@ -1,5 +1,11 @@
 <template>
   <div>
+    <v-icon
+      :title="hasAnyCoordinate ? 'Koordinate vorhanden' : 'Kein Koordinate'"
+      class="float-right"
+    >
+      {{ hasAnyCoordinate ? 'mdi-map-check-outline' : 'mdi-map-outline' }}
+    </v-icon>
     <a :href="article.link">{{ article.title }}</a>
     <p>
       {{ formattedDate }}, Ereignisort: <strong>{{ article.districts }}</strong>
@@ -23,6 +29,10 @@ export default {
     // eslint-disable-next-line object-shorthand
     formattedDate: function() {
       return dateFormat(new Date(this.article.date), 'dd.mm.yyyy HH:MM')
+    },
+    // eslint-disable-next-line object-shorthand
+    hasAnyCoordinate: function() {
+      return this.article.addresses.some((address) => address.coordinate)
     }
   }
 }
