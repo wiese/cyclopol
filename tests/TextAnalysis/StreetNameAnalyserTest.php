@@ -26,6 +26,8 @@ class StreetNameAnalyserTest extends TestCase {
 		yield [ 'Bahnsteig' ];
 		yield [ 'S-Bahnsteig' ];
 
+		yield [ 'Ausstieg in Fahrtrichtung rechts' ];
+
 		yield [ 'Spielplatz' ];
 		yield [ 'Vorplatz' ];
 		yield [ 'Parkplatz' ];

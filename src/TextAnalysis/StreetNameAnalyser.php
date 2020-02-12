@@ -7,7 +7,7 @@ use Cyclopol\DataModel\StreetAddress;
 
 class StreetNameAnalyser {
 
-	public const VERSION = 3;
+	public const VERSION = 4;
 	/**
 	 * IDEAS
 	 * * find location by mentioned "(U/S-)Bahnhof"
@@ -26,6 +26,7 @@ class StreetNameAnalyser {
 				'[rR]ing|' .
 				'[pP]fuhl|' .
 				'[sS]teig|' .
+				'[sS]tieg|' .
 				'[dD]amm|' .
 				'[bB]rücke|' .
 				'[uU]fer|' .
@@ -49,6 +50,8 @@ class StreetNameAnalyser {
 
 		'bahnsteig',
 		's-bahnsteig',
+
+		'ausstieg',
 
 		'spielplatz',
 		'vorplatz',
