@@ -27,11 +27,15 @@
             @mouseover="highlight = article"
             @mouseleave="highlight = {}"
           >
-            <ArticleTeaser :article="article" />
+            <ArticleTeaser :article="article" :highlight="highlight" />
           </li>
         </ul>
         <div class="col" style="width: 800px; height: 800px;">
-          <ArticleMap :articles="article_list" :highlight="highlight" />
+          <ArticleMap
+            :articles="article_list"
+            :highlight="highlight"
+            @maphover="highlight = $event"
+          />
         </div>
       </div>
     </div>

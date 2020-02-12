@@ -1,5 +1,8 @@
 <template>
-  <div>
+  <div
+    :class="{ 'article-teaser--highlighted': highlight === article }"
+    class="article-teaser"
+  >
     <v-icon
       :title="hasAnyCoordinate ? 'Koordinate vorhanden' : 'Kein Koordinate'"
       class="float-right"
@@ -10,7 +13,9 @@
     <p>
       {{ formattedDate }}, Ereignisort: <strong>{{ article.districts }}</strong>
     </p>
-    <p class="text">{{ article.text }}</p>
+    <p class="text">
+      {{ article.text }}
+    </p>
     <!-- <nuxt-link :to="'/users/' + user.id">{{ user.name }}</nuxt-link> -->
   </div>
 </template>
@@ -23,6 +28,10 @@ export default {
     article: {
       type: Object,
       required: true
+    },
+    highlight: {
+      type: Object,
+      default: () => ({})
     }
   },
   computed: {
@@ -39,12 +48,21 @@ export default {
 </script>
 
 <style scoped="scoped">
+.article-teaser {
+  padding: 0.5em;
+  transition: background-color 0.3s;
+}
+
+.article-teaser--highlighted {
+  background-color: #47494e;
+}
+
 .text {
   max-height: 8ex;
   overflow: hidden;
 }
 
-.text:hover {
+.article-teaser--highlighted .text {
   max-height: none;
 }
 </style>

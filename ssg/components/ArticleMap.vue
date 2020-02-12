@@ -21,6 +21,8 @@
             :lat-lng="marker.latlng"
             :color="highlight === marker.article ? 'red' : 'blue'"
             :radius="10"
+            @mouseover="$emit('maphover', marker.article)"
+            @mouseleave="$emit('maphover', {})"
           >
             <l-tooltip>{{ marker.article.title }}</l-tooltip>
           </l-circle-marker>
@@ -28,6 +30,8 @@
             v-else
             :lat-lngs="marker.latlngs"
             :color="highlight === marker.article ? 'red' : 'blue'"
+            @mouseover="$emit('maphover', marker.article)"
+            @mouseleave="$emit('maphover', {})"
           >
             <l-tooltip>{{ marker.article.title }}</l-tooltip>
           </l-polygon>
