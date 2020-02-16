@@ -23,7 +23,7 @@ class ArticleRepository extends EntityRepository {
 			->getResult();
 	}
 
-	public function findByIdsInclRelations( array $ids ) {
+	public function getFindByIdsInclRelationsQuery( array $ids ) {
 		return $this
 			->createQueryBuilder( 'a' )
 			->andWhere( 'a.id IN ( :ids )' )
@@ -39,9 +39,7 @@ class ArticleRepository extends EntityRepository {
 			->setParameter( 'streetNameAnalyserVersion', StreetNameAnalyser::VERSION )
 			->addSelect( 'addresses' )
 			->leftJoin( 'addresses.coordinate', 'coordinate' )
-			->addSelect( 'coordinate' )
-			->getQuery()
-			->getResult();
+			->addSelect( 'coordinate' );
 	}
 
 	public function getFulltextSearchQuery( $search ) {

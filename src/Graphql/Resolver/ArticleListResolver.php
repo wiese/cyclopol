@@ -28,7 +28,10 @@ class ArticleListResolver implements ResolverInterface, AliasedInterface {
 
 		$ids = array_column( $qb->getQuery()->getResult(), 'id' );
 
-		return $repo->findByIdsInclRelations( $ids );
+		return $repo->getFindByIdsInclRelationsQuery( $ids )
+			->orderBy( 'a.date', 'DESC' )
+			->getQuery()
+			->getResult();
 	}
 
 	public static function getAliases(): array {
