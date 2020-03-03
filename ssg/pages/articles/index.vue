@@ -11,7 +11,7 @@
           label="Anzahl (max.)"
         />
       </div>
-      <div class="row">
+      <div class="row" style="height: 224px;">
         <ArticleCountTimeline
           :search="search"
           width="100%"
@@ -30,12 +30,16 @@
             <ArticleTeaser :article="article" :highlight="highlight" />
           </li>
         </ul>
-        <div class="col" style="width: 800px; height: 800px;">
-          <ArticleMap
-            :articles="article_list"
-            :highlight="highlight"
-            @maphover="highlight = $event"
-          />
+        <div class="col mapcol">
+          <Affix :wiggleRoom="75">
+            <div class="map">
+              <ArticleMap
+                :articles="article_list"
+                :highlight="highlight"
+                @maphover="highlight = $event"
+              />
+            </div>
+          </Affix>
         </div>
       </div>
     </div>
@@ -44,12 +48,14 @@
 
 <script>
 import gql from 'graphql-tag'
+import Affix from '@/components/Affix.vue'
 import ArticleTeaser from '@/components/ArticleTeaser.vue'
 import ArticleMap from '@/components/ArticleMap.vue'
 import ArticleCountTimeline from '@/components/ArticleCountTimeline'
 
 export default {
   components: {
+    Affix,
     ArticleTeaser,
     ArticleMap,
     ArticleCountTimeline
@@ -93,3 +99,15 @@ export default {
   }
 }
 </script>
+
+<style>
+.map {
+  width: 800px;
+  height: 800px;
+}
+
+.mapcol .affix-scrolledPast {
+  position: fixed;
+  top: 75px;
+}
+</style>
