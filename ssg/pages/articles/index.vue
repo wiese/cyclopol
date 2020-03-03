@@ -24,8 +24,8 @@
           <li
             v-for="(article, index) in article_list"
             :key="index"
-            @mouseover="highlight = article"
-            @mouseleave="highlight = {}"
+            @mouseenter.passive="highlight = article"
+            @mouseleave.passive="highlight = {}"
           >
             <ArticleTeaser :article="article" :highlight="highlight" />
           </li>
