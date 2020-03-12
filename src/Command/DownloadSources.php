@@ -85,7 +85,10 @@ class DownloadSources extends Command {
 			foreach ( $listing->getArticleTeasers() as $teaser ) {
 				$output->writeln( "inspecting article link {$teaser->getLink()}" );
 
-				if ( $dbArticleSourceRepo->findOneByLink( $teaser->getLink() ) ) {
+				if ( $dbArticleSourceRepo->findOneBy( [
+					'link' => $teaser->getLink(),
+					'listingDate' => $teaser->getDate(),
+				] ) ) {
 					// on cancelled previous runs this may result in unreachable entries
 					$output->writeln( "<info>reached known article. looking no further</info>" );
 					return 0;
@@ -95,6 +98,7 @@ class DownloadSources extends Command {
 
 				try {
 					$articleSource = $httpArticleSourceRepo->get( $teaser->getLink() );
+					$articleSource->setListingDate( $teaser->getDate() );
 
 					$this->entityManager->persist( $articleSource );
 					// saving one at a time to be sure
