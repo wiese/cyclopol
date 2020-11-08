@@ -1,3 +1,18 @@
+# Commands
+
+* starting the services  
+`docker-compose up`
+  * db - persistence
+  * app - data import pipeline and API
+  * ssg - graphical front end
+* Running the data import pipeline  
+`docker-compose exec app bin/console app:workflow`
+
+# External services
+
+* talks to the article source website during commands run on app
+* relies on access to jsdelivr.net in the browser when hosted on ssg
+
 # Data flow
 
 Index => ArticleTeaser
