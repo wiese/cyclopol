@@ -47,6 +47,7 @@ Enrich => Coordinate
   * http user agent
   * urls
 * store Article date and ArticleSource listingDate as UTC and only present it in Berlin time
+* maybe use limdu to classify listings https://www.npmjs.com/package/limdu#batch-learning---learn-from-an-array-of-input-output-pairs
 
 # Problems
 
