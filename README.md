@@ -5,8 +5,12 @@
   * db - persistence
   * app - data import pipeline and API
   * ssg - graphical front end
+* creating the database schema (keep in mind that the *initial* setup of the db container can take a long time before users are created)  
+`docker-compose exec app bin/console doctrine:schema:create`
 * Running the data import pipeline  
 `docker-compose exec app bin/console app:workflow`
+* updating the database schema (only needed after changing DataModels)  
+`docker-compose exec app bin/console doctrine:schema:update`
 
 # External services
 
