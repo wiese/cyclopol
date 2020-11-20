@@ -3,18 +3,10 @@ declare( strict_types = 1 );
 
 namespace Cyclopol\Command;
 
-use Cyclopol\DataModel\Article;
-use Cyclopol\DataModel\ArticleAddress;
-use Cyclopol\GeoCoding\AddressGeoCoder;
-use Cyclopol\TextAnalysis\StreetNameAnalyser;
-use Doctrine\ORM\EntityManager;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\HttpClient\HttpClient;
 
 class Workflow extends Command {
 	public static $defaultName = 'app:workflow';

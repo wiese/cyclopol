@@ -3,7 +3,6 @@
 	<rule ref="./vendor/mediawiki/mediawiki-codesniffer/MediaWiki">
 		<exclude name="MediaWiki.Commenting.FunctionComment"/>
 		<exclude name="MediaWiki.Commenting.MissingCovers.MissingCovers"/>
-		<exclude name="MediaWiki.Classes.UnusedUseStatement.UnusedUse"/>
 		<exclude name="MediaWiki.Commenting.DocComment.SpacingDocTag"/>
 		<exclude name="MediaWiki.WhiteSpace.SpaceBeforeSingleLineComment.NewLineComment"/>
 	</rule>
@@ -11,6 +10,9 @@
 		<properties>
 			<property name="lineLimit" value="120" />
 		</properties>
+	</rule>
+	<rule ref="MediaWiki.Classes.UnusedUseStatement.UnusedUse">
+		<exclude-pattern>src/DataModel/*</exclude-pattern>
 	</rule>
 	<file>.</file>
 	<arg name="extensions" value="php"/>

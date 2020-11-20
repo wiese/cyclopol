@@ -3,7 +3,6 @@ declare( strict_types = 1 );
 
 namespace Cyclopol\Command;
 
-use Cyclopol\DataModel\Article;
 use Cyclopol\DataModel\ArticleAddress;
 use Cyclopol\DataModel\Coordinate;
 use Cyclopol\GeoCoding\AddressGeoCoder;

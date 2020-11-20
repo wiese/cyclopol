@@ -4,7 +4,6 @@ declare( strict_types = 1 );
 namespace Cyclopol\Graphql\Type;
 
 use DateTimeImmutable;
-use DateTimeInterface;
 use GraphQL\Language\AST\Node;
 use GraphQL\Type\Definition\ScalarType;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
