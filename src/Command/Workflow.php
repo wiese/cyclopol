@@ -19,18 +19,19 @@ class Workflow extends Command {
 	protected function execute( InputInterface $input, OutputInterface $output ) {
 		$output->writeln( 'Cyclopol workflow' );
 
-		$returnCode = $this->do( DownloadSources::$defaultName, $input, $output, [] );
+		$workflows = [
+			DownloadSources::$defaultName,
+			ArticlesFromSources::$defaultName,
+			NameStreets::$defaultName,
+			GeocodeAddresses::$defaultName,
+		];
 
-		if ( $returnCode === 0 ) {
-			$returnCode = $this->do( ArticlesFromSources::$defaultName, $input, $output, [] );
-		}
-
-		if ( $returnCode === 0 ) {
-			$returnCode = $this->do( NameStreets::$defaultName, $input, $output, [] );
-		}
-
-		if ( $returnCode === 0 ) {
-			$returnCode = $this->do( GeocodeAddresses::$defaultName, $input, $output, [] );
+		$returnCode = 0;
+		foreach ( $workflows as $command ) {
+			$returnCode = $this->do( $command, [], $output );
+			if ( $returnCode !== 0 ) {
+				break;
+			}
 		}
 
 		return $returnCode;
@@ -38,13 +39,10 @@ class Workflow extends Command {
 
 	private function do(
 		string $name,
-		InputInterface $in,
-		OutputInterface $out,
-		$args = []
+		$args = [],
+		OutputInterface $out
 	): int {
 		$out->writeln( "<comment>Running $name</comment>" );
-		$command = $this->getApplication()->find( $name );
-		$greetInput = new ArrayInput( $args );
-		return $command->run( $in, $out );
+		return $this->getApplication()->find( $name )->run( new ArrayInput( $args ), $out );
 	}
 }
