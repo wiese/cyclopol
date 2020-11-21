@@ -15,6 +15,10 @@ class StreetNameAnalyserTest extends TestCase {
 		yield [ 'lorem ipsum' ];
 
 		// blacklisted
+		yield [ 'Einbahnstraße' ];
+		yield [ 'Nebenstraße' ];
+
+		yield [ 'Fluchtweg' ];
 		yield [ 'Ein Gehweg bleibt unerkannt' ];
 		yield [ 'Radweg' ];
 		yield [ 'Fußweg' ];

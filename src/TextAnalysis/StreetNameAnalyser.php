@@ -39,7 +39,9 @@ class StreetNameAnalyser {
 
 	private const STREET_BLACKLIST = [
 		'einbahnstraße',
+		'nebenstraße',
 
+		'fluchtweg',
 		'gehweg',
 		'radweg',
 		'fußweg',
@@ -76,6 +78,7 @@ class StreetNameAnalyser {
 		'käufer', // vs ~ufer
 		'kokainkäufer', // FIXME implement prefixes or it is getting ridiculous
 
+		// TODO those are hacks - we should only match them if the second term is upper case
 		'ecke straße', // matching the wrong part
 		'einmündung straße', // matching the wrong part
 		'richtung straße',
