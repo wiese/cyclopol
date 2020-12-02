@@ -14,7 +14,7 @@ class StreetNameAnalyserTest extends TestCase {
 		yield [ '' ];
 		yield [ 'lorem ipsum' ];
 
-		// blacklisted
+		// filtered
 		yield [ 'Einbahnstraße' ];
 		yield [ 'Nebenstraße' ];
 
@@ -60,6 +60,8 @@ class StreetNameAnalyserTest extends TestCase {
 		yield [ 'Richtung Straße der Gerechten' ];
 		yield [ 'Bereich Straße der Gerechten' ];
 		yield [ 'Richtung Platz des Friedens' ];
+
+		yield [ 'plötzlich fuhr das Fahrzeug weg und die Kollegen standen ratlos da' ]; // does not match … Weg
 	}
 
 	public function getFineSamples() {
@@ -133,10 +135,6 @@ class StreetNameAnalyserTest extends TestCase {
 			[ new StreetAddress( '-Hoffmann-Promenade' ) ],
 			'... bis zur E.T.A.-Hoffmann-Promenade unterwegs',
 		];
-		yield [
-			[ new StreetAddress( 'Fahrzeug weg' ) ],
-			'plötzlich fuhr das Fahrzeug weg und die Kollegen standen ratlos da',
-		];
 	}
 
 	/**
@@ -163,7 +161,7 @@ class StreetNameAnalyserTest extends TestCase {
 		$this->assertEquals( $expected, $sut->getStreetNames( $text ) );
 	}
 
-	public function testBlacklistWordDoesNotPreventLaterMatches() {
+	public function testFilterWordDoesNotPreventLaterMatches() {
 		$sut = new StreetNameAnalyser();
 		$this->assertEquals(
 			[ new StreetAddress( 'Kurfürstenstraße' ) ],

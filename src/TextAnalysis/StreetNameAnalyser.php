@@ -7,37 +7,40 @@ use Cyclopol\DataModel\StreetAddress;
 
 class StreetNameAnalyser {
 
-	public const VERSION = 4;
+	public const VERSION = 5;
 	/**
 	 * IDEAS
 	 * * find location by mentioned "(U/S-)Bahnhof"
 	 */
-	private const PATTERNS = [
+	private const KEYWORDS = [
+		'stra(?:ß|ss)e',
+		'platz',
+		'park',
+		'allee',
+		'weg',
+		'gasse',
+		'winkel',
+		'ring',
+		'pfuhl',
+		'steig',
+		'stieg',
+		'damm',
+		'brücke',
+		'ufer',
+		'berg',
+		'promenade',
+	];
+	private const PATTERN =
 		'(' .
-			'(?:[\w-]+|[A-Z][\w-]+\s)' .
 			'(?:' .
-				'[sS]tra(?:ß|ss)e|' .
-				'[pP]latz|' .
-				'[pP]ark|' .
-				'[aA]llee|' .
-				'[wW]eg|' .
-				'[gG]asse|' .
-				'[wW]inkel|' .
-				'[rR]ing|' .
-				'[pP]fuhl|' .
-				'[sS]teig|' .
-				'[sS]tieg|' .
-				'[dD]amm|' .
-				'[bB]rücke|' .
-				'[uU]fer|' .
-				'[bB]erg|' .
-				'[pP]romenade' .
+				'[\w-]+@@@KEYWORD@@@' .
+				'|' .
+				'[A-Z][\w-]+\s@@@UCFIRST_KEYWORD@@@' . // match space-separated keywords only if keyword capitalized
 			')' .
 		')' .
-		'(?:\s+(?:Nr\.?|)\s?(\d+\w?)|\b)',
-	];
-
-	private const STREET_BLACKLIST = [
+		'(?:\s+(?:Nr\.?|)\s?(\d+\w?)|\b)';
+	// maintain in lowercase!
+	private const STREET_FILTER = [
 		'einbahnstraße',
 		'nebenstraße',
 
@@ -66,18 +69,21 @@ class StreetNameAnalyser {
 		'carsharing',
 		'gering',
 
-		'kreuzberg', // vs ~berg
+		// vs ~berg
+		'kreuzberg',
 		'friedrichshain-kreuzberg',
 		'tempelhof-schöneberg',
-		'schöneberg', // vs ~berg
+		'schöneberg',
 		'lichtenberg',
 
 		'bahnbrücke',
 		's-bahnbrücke',
 
-		'käufer', // vs ~ufer
-		'kokainkäufer', // FIXME implement prefixes or it is getting ridiculous
+		// vs ~ufer - FIXME implement prefixes or it is getting ridiculous
+		'käufer',
+		'kokainkäufer',
 
+		// TODO
 		// TODO those are hacks - we should only match them if the second term is upper case
 		'ecke straße', // matching the wrong part
 		'einmündung straße', // matching the wrong part
@@ -88,10 +94,22 @@ class StreetNameAnalyser {
 
 	public function getStreetNames( string $text ): array {
 		$streets = [];
-		foreach ( self::PATTERNS as $pattern ) {
+		foreach ( self::KEYWORDS as $keyword ) {
+			$keywordFirst = substr( $keyword, 0, 1 );
+			$pattern = str_replace(
+				[
+					'@@@KEYWORD@@@',
+					'@@@UCFIRST_KEYWORD@@@',
+				],
+				[
+					'[' . $keywordFirst . strtoupper( $keywordFirst ) . ']' . substr( $keyword, 1 ),
+					ucfirst( $keyword ),
+				],
+				self::PATTERN
+			);
 			if ( preg_match_all( '/' . $pattern . '/u', $text, $matches, PREG_UNMATCHED_AS_NULL ) ) {
 				foreach ( $matches[ 1 ] as $key => $street ) {
-					if ( in_array( strtolower( $street ), self::STREET_BLACKLIST ) ) {
+					if ( in_array( strtolower( $street ), self::STREET_FILTER ) ) {
 						continue 1;
 					}
 					$streets[] = new StreetAddress(
