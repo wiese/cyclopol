@@ -31,6 +31,16 @@ class ArticleCrawlerTest extends TestCase {
 				'categories' => 'Mitte',
 			],
 		];
+		yield [
+			file_get_contents( __DIR__ . '/../fixtures/report_with_meta_info_in_text.html' ),
+			[
+				'title' => 'Vier Festnahmen nach Motorraddiebstahl',
+				'id' => 2732,
+				'previousIds' => [],
+				'time' => '2020-11-30 16:21',
+				'categories' => 'bezirksübergreifend',
+			],
+		];
 	}
 
 	/**
@@ -39,6 +49,7 @@ class ArticleCrawlerTest extends TestCase {
 	public function testExamples( string $dom, array $crawler ) {
 		$sut = new ArticleCrawler( $dom );
 		$this->assertSame( $crawler[ 'title' ], $sut->getTitle() );
+		$this->assertNotEmpty( $sut->getText() );
 		$this->assertSame( $crawler[ 'id' ], $sut->getId() );
 		$this->assertSame( $crawler[ 'previousIds' ], $sut->getPreviousIds() );
 		$time = $sut->getTime();

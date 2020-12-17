@@ -9,7 +9,7 @@ use DateTimeZone;
 use Symfony\Component\DomCrawler\Crawler;
 
 class ArticleCrawler {
-	public const VERSION = 1;
+	public const VERSION = 2;
 
 	private Crawler $crawler;
 	private Crawler $mainContent;
@@ -21,11 +21,15 @@ class ArticleCrawler {
 	}
 
 	public function getText(): string {
-		return implode( "\n", $this->mainContent
+		$textile = $this->mainContent
 			->filter( '.body .textile' )
-			->each( function ( $node, $i ) {
-			  return trim( $node->text() );
-			} ) );
+			->reduce( function ( Crawler $node ) {
+				$this->replaceChildBrNodesBySpace( $node );
+			} );
+		$contentElements = $textile->each( function ( $node ) {
+			return trim( $node->text() );
+		} );
+		return implode( "\n", $contentElements );
 	}
 
 	public function getTitle(): string {
@@ -69,5 +73,15 @@ class ArticleCrawler {
 			return array_map( 'intval', $matches[ 1 ] );
 		}
 		return [];
+	}
+
+	/**
+	 * Ensure <br>s leave a whitespace when nodeValue/textContent is pulled
+	 */
+	private function replaceChildBrNodesBySpace( Crawler $node ): void {
+		$rawNode = $node->getNode( 0 );
+		foreach ( $rawNode->getElementsByTagName( 'br' ) as $br ) {
+			$br->parentNode->replaceChild( $rawNode->ownerDocument->createTextNode( ' ' ), $br );
+		}
 	}
 }

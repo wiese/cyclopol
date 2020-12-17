@@ -56,4 +56,3 @@ Enrich => Coordinate
 # Problems
 
 * articles sometimes receive updates (e.g. pressemitteilung.885469.php), they are then listed again (a new ArticleTeaser with a new date) and their content should be downloaded again (new ArticleSource) - how does this translate to Article, though. Is only the latest ArticleSource taken into account when building the Article (and its subsequent information)? Do we somehow make its versions available?
-* ArticleCrawler: sometimes districts and the report id "Nr. 123" stick together, need a br2nl
