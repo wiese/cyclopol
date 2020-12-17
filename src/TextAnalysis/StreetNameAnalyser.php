@@ -7,7 +7,7 @@ use Cyclopol\DataModel\StreetAddress;
 
 class StreetNameAnalyser {
 
-	public const VERSION = 5;
+	public const VERSION = 6;
 	/**
 	 * IDEAS
 	 * * find location by mentioned "(U/S-)Bahnhof"
@@ -52,15 +52,19 @@ class StreetNameAnalyser {
 		'heimweg',
 		'fahrweg',
 		'fußgängerüberweg',
+		'verbindungsweg',
+		'durchweg',
 
 		'bahnsteig',
 		's-bahnsteig',
 
 		'ausstieg',
+		'treppenaufstieg',
 
 		'spielplatz',
 		'vorplatz',
-		'parkplatz',
+		'parkplatz', // FIXME suffix match
+		'mieterparkplatz',
 
 		'sackgasse',
 		'rettungsgasse',
@@ -82,6 +86,7 @@ class StreetNameAnalyser {
 		// vs ~ufer - FIXME implement prefixes or it is getting ridiculous
 		'käufer',
 		'kokainkäufer',
+		'anrufer',
 
 		// TODO
 		// TODO those are hacks - we should only match them if the second term is upper case

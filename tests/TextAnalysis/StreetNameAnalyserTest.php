@@ -26,15 +26,19 @@ class StreetNameAnalyserTest extends TestCase {
 		yield [ 'Heimweg' ];
 		yield [ 'Fahrweg' ];
 		yield [ 'Fußgängerüberweg' ];
+		yield [ 'Verbindungsweg' ];
+		yield [ 'durchweg positiv' ];
 
 		yield [ 'Bahnsteig' ];
 		yield [ 'S-Bahnsteig' ];
 
+		yield [ 'Treppenaufstieg' ];
 		yield [ 'Ausstieg in Fahrtrichtung rechts' ];
 
 		yield [ 'Spielplatz' ];
 		yield [ 'Vorplatz' ];
 		yield [ 'Parkplatz' ];
+		yield [ 'mieterparkplatz' ];
 
 		yield [ 'Rettungsgasse' ];
 		yield [ 'Sackgasse' ];
@@ -54,6 +58,7 @@ class StreetNameAnalyserTest extends TestCase {
 
 		yield [ 'Käufer' ];
 		yield [ 'Kokainkäufer' ];
+		yield [ 'Anrufer' ];
 
 		yield [ 'Ecke Straße der Gerechten' ];
 		yield [ 'Einmündung Straße der Gerechten' ];
