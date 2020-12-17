@@ -64,10 +64,6 @@ class ArticleCrawler {
 		return $this->mainContent->filter( '.body .polizeimeldung' )->eq( 1 )->text();
 	}
 
-	private function getTextLines(): array {
-		return explode( '\n', $this->getText() );
-	}
-
 	private function getReportIds(): array {
 		if ( preg_match_all( '/Nr\.\s?(\d+)/', $this->getText(), $matches ) ) {
 			return array_map( 'intval', $matches[ 1 ] );
