@@ -1,3 +1,11 @@
+cyclopol – browse and visualize press releases
+
+![Screeshot of search results in a list as well as visualized on a map and timeline](doc/images/articles_searched_map_timeline.png)
+
+# Installation
+
+Copy `.env.example` to `.env` and set appropriate values.
+
 # Commands
 
 * starting the services  
@@ -15,7 +23,6 @@
 # External services
 
 * talks to the article source website during commands run on app
-* relies on access to jsdelivr.net in the browser when hosted on ssg
 
 # Data flow
 
@@ -43,15 +50,11 @@ Enrich => Coordinate
 
 # Ideas
 
-* move into DataModel/DTO
-  * ArticleTeaser
-  * StreetAddress
 * move into config
   * default DateTimeZone( 'Europe/Berlin' )
-  * http user agent
-  * urls
 * store Article date and ArticleSource listingDate as UTC and only present it in Berlin time
 * maybe use limdu to classify listings https://www.npmjs.com/package/limdu#batch-learning---learn-from-an-array-of-input-output-pairs
+* make project extensible to allow for modules to be implemented for different cities and their data shapes
 
 # Problems
 
